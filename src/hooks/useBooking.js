@@ -9,8 +9,6 @@ import { useWednesdayDiscount } from './useWednesdayDiscount';
 export const useBooking = (show) => {
   const [selectedSeats, setSelectedSeats] = useState([]);
   const [paymentMethod, setPaymentMethod] = useState('vnpay');
-  const [promotionCode, setPromotionCode] = useState('');
-  const [appliedPromotion, setAppliedPromotion] = useState(null);
 
   // Calculate base price for selected seats
   const basePrice = useMemo(() => {
@@ -30,21 +28,10 @@ export const useBooking = (show) => {
     finalPrice: priceAfterWednesday,
   } = useWednesdayDiscount(show?.date, basePrice);
 
-  // Apply promotion discount
-  const promotionDiscount = useMemo(() => {
-    if (!appliedPromotion) return 0;
-    
-    if (appliedPromotion.type === 'percentage') {
-      return priceAfterWednesday * (appliedPromotion.value / 100);
-    } else {
-      return appliedPromotion.value;
-    }
-  }, [appliedPromotion, priceAfterWednesday]);
-
   // Calculate final total
   const totalAmount = useMemo(() => {
-    return Math.max(0, priceAfterWednesday - promotionDiscount);
-  }, [priceAfterWednesday, promotionDiscount]);
+    return priceAfterWednesday;
+  }, [priceAfterWednesday]);
 
   // Toggle seat selection
   const toggleSeat = useCallback((seat) => {
@@ -75,31 +62,16 @@ export const useBooking = (show) => {
     setSelectedSeats([]);
   }, []);
 
-  // Apply promotion
-  const applyPromotion = useCallback((promotion) => {
-    setAppliedPromotion(promotion);
-  }, []);
-
-  // Clear promotion
-  const clearPromotion = useCallback(() => {
-    setAppliedPromotion(null);
-    setPromotionCode('');
-  }, []);
-
   // Reset booking
   const resetBooking = useCallback(() => {
     setSelectedSeats([]);
     setPaymentMethod('vnpay');
-    setPromotionCode('');
-    setAppliedPromotion(null);
   }, []);
 
   return {
     // State
     selectedSeats,
     paymentMethod,
-    promotionCode,
-    appliedPromotion,
     
     // Pricing
     basePrice,
@@ -107,7 +79,6 @@ export const useBooking = (show) => {
     wednesdayDiscountRate,
     wednesdayDiscountAmount,
     priceAfterWednesday,
-    promotionDiscount,
     totalAmount,
     
     // Methods
@@ -115,9 +86,6 @@ export const useBooking = (show) => {
     isSeatSelected,
     clearSeats,
     setPaymentMethod,
-    setPromotionCode,
-    applyPromotion,
-    clearPromotion,
     resetBooking,
   };
 };

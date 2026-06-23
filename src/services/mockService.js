@@ -6,7 +6,6 @@ let mockData = {
   shows: [],
   bookings: [],
   seats: {},
-  promotions: [],
   users: [
     {
       id: '1',
@@ -86,26 +85,6 @@ const initializeMockData = () => {
     };
   });
 
-  // Create sample promotions
-  mockData.promotions = [
-    {
-      id: '1',
-      code: 'WELCOME10',
-      type: 'percentage',
-      value: 10,
-      description: '10% off for new customers',
-      active: true,
-    },
-    {
-      id: '2',
-      code: 'SAVE20',
-      type: 'fixed',
-      value: 20,
-      description: '$20 off any booking',
-      active: true,
-    },
-  ];
-
   // Load from localStorage if available
   const stored = localStorage.getItem('mockData');
   if (stored) {
@@ -134,7 +113,6 @@ const saveMockData = () => {
     shows: mockData.shows,
     bookings: mockData.bookings,
     seats: mockData.seats,
-    promotions: mockData.promotions,
   }));
 };
 
@@ -343,49 +321,6 @@ export const mockService = {
     return booking;
   },
 
-  // Promotions
-  getPromotions: async () => {
-    await delay();
-    return mockData.promotions.filter((p) => p.active);
-  },
-
-  getPromotionByCode: async (code) => {
-    await delay();
-    const promotion = mockData.promotions.find(
-      (p) => p.code === code && p.active
-    );
-    if (!promotion) throw new Error('Promotion not found');
-    return promotion;
-  },
-
-  createPromotion: async (promotionData) => {
-    await delay();
-    const newPromotion = {
-      id: String(mockData.promotions.length + 1),
-      ...promotionData,
-      active: true,
-    };
-    mockData.promotions.push(newPromotion);
-    saveMockData();
-    return newPromotion;
-  },
-
-  updatePromotion: async (id, promotionData) => {
-    await delay();
-    const index = mockData.promotions.findIndex((p) => p.id === id);
-    if (index === -1) throw new Error('Promotion not found');
-    mockData.promotions[index] = { ...mockData.promotions[index], ...promotionData };
-    saveMockData();
-    return mockData.promotions[index];
-  },
-
-  deletePromotion: async (id) => {
-    await delay();
-    mockData.promotions = mockData.promotions.filter((p) => p.id !== id);
-    saveMockData();
-    return { success: true };
-  },
-
   // Reports
   getRevenueReport: async () => {
     await delay();
@@ -405,15 +340,15 @@ export const mockService = {
       cash: mockData.bookings
         .filter((b) => b.paymentMethod === 'cash' && b.status === BOOKING_STATUS.SUCCESS)
         .reduce((sum, b) => sum + b.totalAmount, 0),
-      card: mockData.bookings
-        .filter((b) => b.paymentMethod === 'card' && b.status === BOOKING_STATUS.SUCCESS)
+      vnpay: mockData.bookings
+        .filter((b) => b.paymentMethod === 'vnpay' && b.status === BOOKING_STATUS.SUCCESS)
         .reduce((sum, b) => sum + b.totalAmount, 0),
     };
 
     return {
       revenueByShow,
       paymentMethods,
-      totalRevenue: paymentMethods.cash + paymentMethods.card,
+      totalRevenue: paymentMethods.cash + paymentMethods.vnpay,
     };
   },
 

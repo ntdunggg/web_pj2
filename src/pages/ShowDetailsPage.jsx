@@ -1,12 +1,11 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { ArrowLeft, Tag as TagIcon } from 'lucide-react';
+import { ArrowLeft } from 'lucide-react';
 import { Layout } from '../components/Layout';
 import { SeatingChart } from '../components/SeatingChart';
 import { BookingSummary } from '../components/BookingSummary';
 import { PaymentForm } from '../components/PaymentForm';
 import { Button } from '../components/ui/Button';
-import { Input } from '../components/ui/Input';
 import { Alert } from '../components/ui/Alert';
 import { Spinner, LoadingOverlay } from '../components/ui/Spinner';
 import { useAuth } from '../contexts/AuthContext';
@@ -24,8 +23,6 @@ export const ShowDetailsPage = () => {
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState(null);
   const [step, setStep] = useState(1); // 1: Select seats, 2: Payment
-  const [promoCodeInput, setPromoCodeInput] = useState('');
-  const [promoError, setPromoError] = useState('');
 
   const booking = useBooking(show);
 
@@ -49,16 +46,7 @@ export const ShowDetailsPage = () => {
     }
   };
 
-  const handleApplyPromoCode = async () => {
-    try {
-      setPromoError('');
-      const promotion = await serviceProvider.getPromotionByCode(promoCodeInput);
-      booking.applyPromotion(promotion);
-      booking.setPromotionCode(promoCodeInput);
-    } catch (err) {
-      setPromoError(err.message || 'Invalid promotion code');
-    }
-  };
+
 
   const handlePayment = async (paymentData) => {
     if (!user) {
@@ -80,9 +68,7 @@ export const ShowDetailsPage = () => {
         baseAmount: booking.basePrice,
         discounts: {
           wednesday: booking.wednesdayDiscountAmount,
-          promotion: booking.promotionDiscount,
         },
-        promotionCode: booking.promotionCode || null,
         contactPhone: paymentData.phone || null,
         deliveryAddress: paymentData.address || null,
       };
@@ -188,36 +174,8 @@ export const ShowDetailsPage = () => {
                 isWednesday={booking.isWednesday}
                 wednesdayDiscountAmount={booking.wednesdayDiscountAmount}
                 priceAfterWednesday={booking.priceAfterWednesday}
-                promotionDiscount={booking.promotionDiscount}
-                appliedPromotion={booking.appliedPromotion}
                 totalAmount={booking.totalAmount}
-                onRemovePromotion={booking.clearPromotion}
               />
-
-              {/* Promo Code */}
-              {!booking.appliedPromotion && (
-                <div className="mt-4 bg-white border border-gray-200 rounded-lg p-4 shadow-sm">
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Have a promo code?
-                  </label>
-                  <div className="flex gap-2 items-start">
-                    <Input
-                      placeholder="Enter code"
-                      value={promoCodeInput}
-                      onChange={(e) => setPromoCodeInput(e.target.value.toUpperCase())}
-                      error={promoError}
-                    />
-                    <Button
-                      variant="outline"
-                      onClick={handleApplyPromoCode}
-                      disabled={!promoCodeInput.trim()}
-                      className="cursor-pointer"
-                    >
-                      <TagIcon className="h-4 w-4" />
-                    </Button>
-                  </div>
-                </div>
-              )}
 
               <Button
                 className="w-full mt-4"
@@ -239,6 +197,7 @@ export const ShowDetailsPage = () => {
                 onSubmit={handlePayment}
                 disabled={submitting}
                 amount={booking.totalAmount}
+                className="flex w-full flex-col justify-between rounded-3xl border border-primary/20 bg-primary/15 p-6 backdrop-blur-sm transition duration-300 hover:-translate-y-1 hover:bg-primary/12"
               />
               <Button
                 variant="ghost"
@@ -260,9 +219,8 @@ export const ShowDetailsPage = () => {
                 isWednesday={booking.isWednesday}
                 wednesdayDiscountAmount={booking.wednesdayDiscountAmount}
                 priceAfterWednesday={booking.priceAfterWednesday}
-                promotionDiscount={booking.promotionDiscount}
-                appliedPromotion={booking.appliedPromotion}
                 totalAmount={booking.totalAmount}
+                className="flex w-full flex-col justify-between rounded-3xl border border-primary/20 bg-primary/15 p-6 backdrop-blur-sm transition duration-300 hover:-translate-y-1 hover:bg-primary/12"
               />
             </div>
           </div>

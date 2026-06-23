@@ -12,15 +12,13 @@ export const BookingSummary = ({
   isWednesday,
   wednesdayDiscountAmount,
   priceAfterWednesday,
-  promotionDiscount,
-  appliedPromotion,
   totalAmount,
-  onRemovePromotion,
+  className,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <Card className="sticky top-4">
+    <div className={cn("sticky top-4", className || "bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-200 border border-gray-200")}>
       <CardHeader 
         className="flex justify-between items-center cursor-pointer lg:cursor-default" 
         onClick={() => setIsOpen(!isOpen)}
@@ -83,26 +81,6 @@ export const BookingSummary = ({
               </div>
             )}
 
-            {appliedPromotion && promotionDiscount > 0 && (
-              <div className="flex justify-between items-center text-sm text-green-600">
-                <span className="flex items-center gap-1">
-                  <Tag className="h-4 w-4" />
-                  {appliedPromotion.code}
-                </span>
-                <div className="flex items-center gap-2">
-                  <span className="font-medium">-${promotionDiscount.toFixed(2)}</span>
-                  {onRemovePromotion && (
-                    <button
-                      onClick={onRemovePromotion}
-                      className="text-gray-400 hover:text-red-600 transition-colors cursor-pointer"
-                    >
-                      <X className="h-4 w-4" />
-                    </button>
-                  )}
-                </div>
-              </div>
-            )}
-
             <div className="flex justify-between text-lg font-bold text-gray-900 pt-2 border-t border-gray-200">
               <span>Total</span>
               <span className="text-primary-600">${totalAmount.toFixed(2)}</span>
@@ -119,6 +97,6 @@ export const BookingSummary = ({
           )}
         </CardContent>
       </div>
-    </Card>
+    </div>
   );
 };

@@ -119,7 +119,7 @@ export const MyTicketsPage = () => {
               const seatNumbers = item.tickets?.map(t => t.seatNumber).join(', ') || '';
 
               return (
-                <div key={index} className="mt-4 max-w-3xl rounded-3xl border border-primary/20 bg-primary/8 p-3 backdrop-blur-sm transition duration-300 hover:-translate-y-1 hover:bg-primary/12">
+                <div key={index} className="mt-4 max-w-3xl flex w-full flex-col justify-between rounded-3xl border border-primary/20 bg-primary/15 p-6 backdrop-blur-sm transition duration-300 hover:-translate-y-1 hover:bg-primary/12">
                   <div className="flex flex-col justify-between md:flex-row">
                     <div className="flex flex-col md:flex-row">
                       <img

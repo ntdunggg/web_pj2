@@ -52,7 +52,7 @@ export const ReportsAndCharts = () => {
   }
 
   const paymentMethodData = [
-    { name: 'Card', value: revenueData.paymentMethods.card, color: '#f84565' },
+    { name: 'VNPay / VietQR', value: revenueData.paymentMethods.vnpay || 0, color: '#3b82f6' },
     { name: 'Cash', value: revenueData.paymentMethods.cash, color: '#10b981' },
   ];
 

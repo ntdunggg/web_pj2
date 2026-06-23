@@ -1,6 +1,5 @@
 import { showService } from './showService';
 import { bookingService } from './bookingService';
-import { promotionService } from './promotionService';
 import { reportService } from './reportService';
 import { authService } from './authService';
 import { mockService } from './mockService';
@@ -139,41 +138,7 @@ export const serviceProvider = {
     return bookingService.submitPayment({ bookingId, method, phone, address });
   },
 
-  // Promotions
-  getPromotions: async () => {
-    if (isTestMode()) {
-      return mockService.getPromotions();
-    }
-    return promotionService.getAll();
-  },
 
-  getPromotionByCode: async (code) => {
-    if (isTestMode()) {
-      return mockService.getPromotionByCode(code);
-    }
-    return promotionService.getByCode(code);
-  },
-
-  createPromotion: async (promotionData) => {
-    if (isTestMode()) {
-      return mockService.createPromotion(promotionData);
-    }
-    return promotionService.create(promotionData);
-  },
-
-  updatePromotion: async (id, promotionData) => {
-    if (isTestMode()) {
-      return mockService.updatePromotion(id, promotionData);
-    }
-    return promotionService.update(id, promotionData);
-  },
-
-  deletePromotion: async (id) => {
-    if (isTestMode()) {
-      return mockService.deletePromotion(id);
-    }
-    return promotionService.delete(id);
-  },
 
   // Reports
   getRevenueReport: async (params) => {

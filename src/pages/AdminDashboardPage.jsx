@@ -1,13 +1,11 @@
 import { useState } from 'react';
-import { Calendar, Tag, BarChart3 } from 'lucide-react';
+import { Calendar, BarChart3 } from 'lucide-react';
 import { Layout } from '../components/Layout';
 import { EventManagement } from '../components/admin/EventManagement';
-import { PromotionManagement } from '../components/admin/PromotionManagement';
 import { ReportsAndCharts } from '../components/admin/ReportsAndCharts';
 
 const TABS = {
   EVENTS: 'events',
-  PROMOTIONS: 'promotions',
   REPORTS: 'reports',
 };
 
@@ -19,11 +17,6 @@ export const AdminDashboardPage = () => {
       id: TABS.EVENTS,
       label: 'Event Management',
       icon: Calendar,
-    },
-    {
-      id: TABS.PROMOTIONS,
-      label: 'Promotions',
-      icon: Tag,
     },
     {
       id: TABS.REPORTS,
@@ -69,7 +62,6 @@ export const AdminDashboardPage = () => {
         <main className="flex-1 min-w-0">
           <div className="flex w-full flex-col justify-between rounded-3xl border border-primary/20 bg-primary/8 p-6 backdrop-blur-sm transition duration-300 hover:bg-primary/12">
             {activeTab === TABS.EVENTS && <EventManagement />}
-            {activeTab === TABS.PROMOTIONS && <PromotionManagement />}
             {activeTab === TABS.REPORTS && <ReportsAndCharts />}
           </div>
         </main>

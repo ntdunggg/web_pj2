@@ -4,7 +4,7 @@ import { Button } from './ui/Button';
 import { Card, CardContent, CardHeader } from './ui/Card';
 import { PAYMENT_METHODS } from '../utils/constants';
 
-export const PaymentForm = ({ paymentMethod, onPaymentMethodChange, onSubmit, disabled, amount }) => {
+export const PaymentForm = ({ paymentMethod, onPaymentMethodChange, onSubmit, disabled, amount, className }) => {
   const [phone, setPhone] = useState('');
   const [address, setAddress] = useState('');
 
@@ -30,7 +30,7 @@ export const PaymentForm = ({ paymentMethod, onPaymentMethodChange, onSubmit, di
   };
 
   return (
-    <Card>
+    <div className={className || "bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-200 border border-gray-200"}>
       <CardHeader>
         <h3 className="text-xl font-semibold text-gray-900">Payment Method</h3>
       </CardHeader>
@@ -126,6 +126,6 @@ export const PaymentForm = ({ paymentMethod, onPaymentMethodChange, onSubmit, di
           </Button>
         </form>
       </CardContent>
-    </Card>
+    </div>
   );
 };
