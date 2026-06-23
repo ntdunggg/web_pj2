@@ -29,12 +29,14 @@ export const PaymentForm = ({ paymentMethod, onPaymentMethodChange, onSubmit, di
     }
   };
 
+  const isCustomStyle = !!className;
+
   return (
     <div className={className || "bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-200 border border-gray-200"}>
-      <CardHeader>
+      <div className={isCustomStyle ? "pb-4 border-b border-primary/20" : "px-6 py-4 border-b border-gray-200"}>
         <h3 className="text-xl font-semibold text-gray-900">Payment Method</h3>
-      </CardHeader>
-      <CardContent>
+      </div>
+      <div className={isCustomStyle ? "space-y-4 pt-4" : "px-6 py-4"}>
         <form onSubmit={handleSubmit} className="space-y-4">
           {/* Payment Method Selection */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -125,7 +127,7 @@ export const PaymentForm = ({ paymentMethod, onPaymentMethodChange, onSubmit, di
             Confirm Payment
           </Button>
         </form>
-      </CardContent>
+      </div>
     </div>
   );
 };

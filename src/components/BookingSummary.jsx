@@ -16,11 +16,12 @@ export const BookingSummary = ({
   className,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const isCustomStyle = !!className;
 
   return (
     <div className={cn("sticky top-4", className || "bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-200 border border-gray-200")}>
-      <CardHeader 
-        className="flex justify-between items-center cursor-pointer lg:cursor-default" 
+      <div 
+        className={isCustomStyle ? "flex justify-between items-center cursor-pointer lg:cursor-default pb-4 border-b border-primary/20" : "px-6 py-4 border-b border-gray-200 flex justify-between items-center cursor-pointer lg:cursor-default"} 
         onClick={() => setIsOpen(!isOpen)}
       >
         <div className="flex flex-col text-left">
@@ -34,10 +35,10 @@ export const BookingSummary = ({
         <span className="lg:hidden text-sm text-primary-600 font-semibold">
           {isOpen ? 'Hide' : 'Show'}
         </span>
-      </CardHeader>
+      </div>
       
       <div className={cn("lg:block", isOpen ? "block" : "hidden")}>
-        <CardContent className="space-y-4">
+        <div className={isCustomStyle ? "space-y-4 pt-4" : "px-6 py-4 space-y-4"}>
           {/* Show Details */}
           {show && (
             <div>
@@ -95,7 +96,7 @@ export const BookingSummary = ({
               </p>
             </div>
           )}
-        </CardContent>
+        </div>
       </div>
     </div>
   );
