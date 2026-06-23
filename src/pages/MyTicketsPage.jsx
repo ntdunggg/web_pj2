@@ -23,16 +23,22 @@ export const MyTicketsPage = () => {
       const bookingsData = await serviceProvider.getMyBookings();
       setBookings(bookingsData);
 
-      // Load show details for each booking
-      const showPromises = bookingsData.map(booking =>
-        serviceProvider.getShowById(booking.showId)
-      );
-      const showsData = await Promise.all(showPromises);
-      
+      // Load show details for each booking, handling missing shows gracefully
+      const uniqueShowIds = [...new Set(bookingsData.map(b => b.showId))];
       const showsMap = {};
-      showsData.forEach(show => {
-        showsMap[show.id] = show;
-      });
+      
+      await Promise.all(
+        uniqueShowIds.map(async (showId) => {
+          try {
+            const show = await serviceProvider.getShowById(showId);
+            showsMap[showId] = show;
+          } catch (err) {
+            console.warn(`Could not load details for show ${showId}:`, err);
+            showsMap[showId] = { id: showId, name: 'Deleted/Unknown Show', date: '' };
+          }
+        })
+      );
+      
       setShows(showsMap);
     } catch (err) {
       setError(err.message);
@@ -46,6 +52,20 @@ export const MyTicketsPage = () => {
       <Layout>
         <div className="flex justify-center items-center py-20">
           <Spinner size="lg" />
+        </div>
+      </Layout>
+    );
+  }
+
+  if (error && bookings.length === 0) {
+    return (
+      <Layout>
+        <div className="space-y-6 px-4 md:px-0">
+          <h1 className="text-3xl font-bold text-gray-900">My Tickets</h1>
+          <Alert variant="error">
+            <p className="font-semibold">Error loading tickets</p>
+            <p className="text-sm">{error}</p>
+          </Alert>
         </div>
       </Layout>
     );

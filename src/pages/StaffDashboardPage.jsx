@@ -27,15 +27,22 @@ export const StaffDashboardPage = () => {
       const bookingsData = await serviceProvider.getAllBookings();
       setBookings(bookingsData);
 
-      // Load show details
+      // Load show details, handling missing shows gracefully
       const uniqueShowIds = [...new Set(bookingsData.map(b => b.showId))];
-      const showPromises = uniqueShowIds.map(id => serviceProvider.getShowById(id));
-      const showsData = await Promise.all(showPromises);
-      
       const showsMap = {};
-      showsData.forEach(show => {
-        showsMap[show.id] = show;
-      });
+      
+      await Promise.all(
+        uniqueShowIds.map(async (showId) => {
+          try {
+            const show = await serviceProvider.getShowById(showId);
+            showsMap[showId] = show;
+          } catch (err) {
+            console.warn(`Could not load details for show ${showId}:`, err);
+            showsMap[showId] = { id: showId, name: 'Deleted/Unknown Show', date: '' };
+          }
+        })
+      );
+      
       setShows(showsMap);
     } catch (err) {
       setError(err.message);
@@ -48,12 +55,12 @@ export const StaffDashboardPage = () => {
     try {
       setUpdating(bookingId);
       await serviceProvider.updateBookingStatus(bookingId, status);
-      
+
       // Update local state
       setBookings(bookings.map(b =>
         b.id === bookingId ? { ...b, status } : b
       ));
-      
+
       setError(null);
     } catch (err) {
       setError(`Failed to update booking status: ${err.message}`);
@@ -110,61 +117,55 @@ export const StaffDashboardPage = () => {
 
         {/* Stats */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <Card>
-            <CardContent className="p-6">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm text-gray-650 text-gray-650 text-gray-550 text-gray-600">Pending</p>
-                  <p className="text-3xl font-bold text-gray-900 mt-1">
-                    {bookings.filter(b => b.status === BOOKING_STATUS.PENDING).length}
-                  </p>
-                </div>
-                <div className="p-3 bg-yellow-50 rounded-full">
-                  <Clock className="h-6 w-6 text-yellow-600" />
-                </div>
+          <div className="flex w-full flex-col justify-between rounded-3xl border border-primary/20 bg-primary/15 p-3 backdrop-blur-sm transition duration-300 hover:-translate-y-1 hover:bg-primary/12">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm text-gray-600">Pending</p>
+                <p className="text-3xl font-bold text-gray-900 mt-1">
+                  {bookings.filter(b => b.status === BOOKING_STATUS.PENDING).length}
+                </p>
               </div>
-            </CardContent>
-          </Card>
-          
-          <Card>
-            <CardContent className="p-6">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm text-gray-650 text-gray-650 text-gray-550 text-gray-600">Confirmed</p>
-                  <p className="text-3xl font-bold text-gray-900 mt-1">
-                    {bookings.filter(b => b.status === BOOKING_STATUS.SUCCESS).length}
-                  </p>
-                </div>
-                <div className="p-3 bg-green-50 rounded-full">
-                  <CheckCircle className="h-6 w-6 text-green-600" />
-                </div>
+              <div className="p-3 bg-yellow-50 rounded-full">
+                <Clock className="h-6 w-6 text-yellow-600" />
               </div>
-            </CardContent>
-          </Card>
-          
-          <Card>
-            <CardContent className="p-6">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm text-gray-650 text-gray-650 text-gray-550 text-gray-600">Rejected</p>
-                  <p className="text-3xl font-bold text-gray-900 mt-1">
-                    {bookings.filter(b => b.status === BOOKING_STATUS.REJECTED).length}
-                  </p>
-                </div>
-                <div className="p-3 bg-red-50 rounded-full">
-                  <XCircle className="h-6 w-6 text-red-600" />
-                </div>
+            </div>
+          </div>
+
+          <div className="flex w-full flex-col justify-between rounded-3xl border border-primary/20 bg-primary/15 p-3 backdrop-blur-sm transition duration-300 hover:-translate-y-1 hover:bg-primary/12">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm text-gray-600">Confirmed</p>
+                <p className="text-3xl font-bold text-gray-900 mt-1">
+                  {bookings.filter(b => b.status === BOOKING_STATUS.SUCCESS).length}
+                </p>
               </div>
-            </CardContent>
-          </Card>
+              <div className="p-3 bg-green-50 rounded-full">
+                <CheckCircle className="h-6 w-6 text-green-600" />
+              </div>
+            </div>
+          </div>
+
+          <div className="flex w-full flex-col justify-between rounded-3xl border border-primary/20 bg-primary/15 p-3 backdrop-blur-sm transition duration-300 hover:-translate-y-1 hover:bg-primary/12">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm text-gray-600">Rejected</p>
+                <p className="text-3xl font-bold text-gray-900 mt-1">
+                  {bookings.filter(b => b.status === BOOKING_STATUS.REJECTED).length}
+                </p>
+              </div>
+              <div className="p-3 bg-red-50 rounded-full">
+                <XCircle className="h-6 w-6 text-red-600" />
+              </div>
+            </div>
+          </div>
         </div>
 
         {/* Bookings List */}
-        <Card>
-          <CardHeader>
+        <div className="flex w-full flex-col justify-between rounded-3xl border border-primary/20 bg-primary/15 p-6 backdrop-blur-sm transition duration-300 hover:-translate-y-1 hover:bg-primary/12">
+          <div className="pb-4 mb-4 border-b border-primary/10">
             <h2 className="text-xl font-semibold text-gray-900">All Bookings</h2>
-          </CardHeader>
-          <CardContent>
+          </div>
+          <div>
             {bookings.length === 0 ? (
               <p className="text-center text-gray-500 py-8">No bookings found</p>
             ) : (
@@ -258,8 +259,8 @@ export const StaffDashboardPage = () => {
                 </table>
               </div>
             )}
-          </CardContent>
-        </Card>
+          </div>
+        </div>
       </div>
     </Layout>
   );

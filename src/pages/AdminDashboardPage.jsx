@@ -31,12 +31,11 @@ export const AdminDashboardPage = () => {
       icon: BarChart3,
     },
   ];
-
   return (
     <Layout>
       <div className="flex flex-col md:flex-row gap-6 min-h-[calc(100vh-12rem)]">
         {/* Sidebar Navigation */}
-        <aside className="w-full md:w-64 flex-shrink-0 bg-white border border-gray-200 rounded-lg p-4 shadow-md h-fit md:sticky md:top-20">
+        <aside className="w-full md:w-64 flex-shrink-0 flex flex-col justify-between rounded-3xl border border-primary/20 bg-primary/8 p-6 backdrop-blur-sm transition duration-300 hover:bg-primary/12 h-fit md:sticky md:top-20">
           <div className="mb-6 px-2">
             <h1 className="text-2xl font-bold text-gray-900">Admin Panel</h1>
             <p className="text-xs text-gray-500 mt-1">Management & reports</p>
@@ -53,7 +52,7 @@ export const AdminDashboardPage = () => {
                   className={`
                     flex items-center gap-3 py-2.5 px-4 rounded-lg font-medium text-sm transition-all duration-200 cursor-pointer text-left w-full whitespace-nowrap
                     ${isActive
-                      ? 'bg-primary-50 text-primary-700 font-semibold shadow-sm'
+                      ? 'bg-primary/20 text-primary-900 font-semibold shadow-sm'
                       : 'text-gray-500 hover:bg-gray-50 hover:text-gray-900'
                     }
                   `}
@@ -68,7 +67,7 @@ export const AdminDashboardPage = () => {
 
         {/* Main Content Area */}
         <main className="flex-1 min-w-0">
-          <div className="bg-white border border-gray-200 shadow-md rounded-lg p-6">
+          <div className="flex w-full flex-col justify-between rounded-3xl border border-primary/20 bg-primary/8 p-6 backdrop-blur-sm transition duration-300 hover:bg-primary/12">
             {activeTab === TABS.EVENTS && <EventManagement />}
             {activeTab === TABS.PROMOTIONS && <PromotionManagement />}
             {activeTab === TABS.REPORTS && <ReportsAndCharts />}

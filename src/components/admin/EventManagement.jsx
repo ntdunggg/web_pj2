@@ -94,53 +94,55 @@ export const EventManagement = () => {
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {shows.map((show) => (
-            <Card key={show.id}>
-              <div className="relative aspect-video overflow-hidden border-b border-gray-200">
-                <img
-                  src={show.image}
-                  alt={show.name}
-                  className="w-full h-full object-cover"
-                />
-                <Badge variant={show.status === 'active' ? 'success' : 'default'} 
-                  className="absolute top-2 right-2">
-                  {show.status}
-                </Badge>
+            <div key={show.id} className="flex w-full flex-col justify-between rounded-3xl border border-primary/20 bg-primary/15 p-6 backdrop-blur-sm transition duration-300 hover:-translate-y-1 hover:bg-primary/20">
+              <div>
+                <div className="relative aspect-video overflow-hidden rounded-2xl mb-4">
+                  <img
+                    src={show.image}
+                    alt={show.name}
+                    className="w-full h-full object-cover"
+                  />
+                  <Badge variant={show.status === 'active' ? 'success' : 'default'} 
+                    className="absolute top-2 right-2">
+                    {show.status}
+                  </Badge>
+                </div>
+                <div className="space-y-3">
+                  <h3 className="text-lg font-bold text-gray-900">
+                    {show.name}
+                  </h3>
+                  <p className="text-sm text-gray-500 line-clamp-2">
+                    {show.description}
+                  </p>
+                  <div className="text-sm text-gray-600">
+                    <strong className="text-primary-600 font-medium mr-1 font-semibold">Date:</strong> {formatDateTime(show.date)}
+                  </div>
+                  <div className="text-sm text-gray-600">
+                    <strong className="text-primary-600 font-medium mr-1 font-semibold">Pricing:</strong> Zone A: ${show.pricing.zone_a}, 
+                    Zone B: ${show.pricing.zone_b}, 2nd Floor: ${show.pricing.level_2}
+                  </div>
+                </div>
               </div>
-              <CardContent className="p-4 space-y-3 bg-white">
-                <h3 className="text-lg font-bold text-gray-900">
-                  {show.name}
-                </h3>
-                <p className="text-sm text-gray-500 line-clamp-2">
-                  {show.description}
-                </p>
-                <div className="text-sm text-gray-650 text-gray-600">
-                  <strong className="text-primary-600 font-medium mr-1 font-semibold">Date:</strong> {formatDateTime(show.date)}
-                </div>
-                <div className="text-sm text-gray-655 text-gray-650 text-gray-600">
-                  <strong className="text-primary-600 font-medium mr-1 font-semibold">Pricing:</strong> Zone A: ${show.pricing.zone_a}, 
-                  Zone B: ${show.pricing.zone_b}, 2nd Floor: ${show.pricing.level_2}
-                </div>
-                <div className="flex gap-2 pt-2">
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    className="flex-1 cursor-pointer"
-                    onClick={() => handleEditShow(show)}
-                  >
-                    <Edit className="h-4 w-4 mr-1" />
-                    Edit
-                  </Button>
-                  <Button
-                    variant="danger"
-                    size="sm"
-                    className="cursor-pointer"
-                    onClick={() => handleDeleteShow(show.id)}
-                  >
-                    <Trash2 className="h-4 w-4" />
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
+              <div className="flex gap-2 pt-4 mt-auto">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="flex-1 cursor-pointer"
+                  onClick={() => handleEditShow(show)}
+                >
+                  <Edit className="h-4 w-4 mr-1" />
+                  Edit
+                </Button>
+                <Button
+                  variant="danger"
+                  size="sm"
+                  className="cursor-pointer"
+                  onClick={() => handleDeleteShow(show.id)}
+                >
+                  <Trash2 className="h-4 w-4" />
+                </Button>
+              </div>
+            </div>
           ))}
         </div>
       )}
@@ -209,18 +211,16 @@ const ShowForm = ({ show, onClose }) => {
   };
 
   return (
-    <Card>
-      <CardHeader>
-        <div className="flex justify-between items-center">
-          <h3 className="text-xl font-semibold text-gray-900">
-            {show ? 'Edit Show' : 'Create New Show'}
-          </h3>
-          <Button variant="ghost" size="sm" onClick={() => onClose()} className="cursor-pointer">
-            <X className="h-5 w-5" />
-          </Button>
-        </div>
-      </CardHeader>
-      <CardContent>
+    <div className="flex w-full flex-col justify-between rounded-3xl border border-primary/20 bg-primary/15 p-6 backdrop-blur-sm transition duration-300 hover:bg-primary/20">
+      <div className="flex justify-between items-center pb-4 mb-4 border-b border-primary/10">
+        <h3 className="text-xl font-semibold text-gray-900">
+          {show ? 'Edit Show' : 'Create New Show'}
+        </h3>
+        <Button variant="ghost" size="sm" onClick={() => onClose()} className="cursor-pointer">
+          <X className="h-5 w-5" />
+        </Button>
+      </div>
+      <div>
         {error && (
           <Alert variant="error" className="mb-4">
             {error}
@@ -353,7 +353,7 @@ const ShowForm = ({ show, onClose }) => {
             </Button>
           </div>
         </form>
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   );
 };

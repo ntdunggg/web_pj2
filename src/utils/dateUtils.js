@@ -6,8 +6,13 @@ import { format, isWednesday, parseISO } from 'date-fns';
  * @returns {boolean}
  */
 export const isDateWednesday = (date) => {
-  const dateObj = typeof date === 'string' ? parseISO(date) : date;
-  return isWednesday(dateObj);
+  if (!date) return false;
+  try {
+    const dateObj = typeof date === 'string' ? parseISO(date) : date;
+    return isWednesday(dateObj);
+  } catch (err) {
+    return false;
+  }
 };
 
 /**
@@ -17,8 +22,13 @@ export const isDateWednesday = (date) => {
  * @returns {string}
  */
 export const formatDate = (date, formatStr = 'PPP') => {
-  const dateObj = typeof date === 'string' ? parseISO(date) : date;
-  return format(dateObj, formatStr);
+  if (!date) return 'N/A';
+  try {
+    const dateObj = typeof date === 'string' ? parseISO(date) : date;
+    return format(dateObj, formatStr);
+  } catch (err) {
+    return 'Invalid Date';
+  }
 };
 
 /**
@@ -27,5 +37,6 @@ export const formatDate = (date, formatStr = 'PPP') => {
  * @returns {string}
  */
 export const formatDateTime = (date) => {
+  if (!date) return 'N/A';
   return formatDate(date, 'PPP p');
 };

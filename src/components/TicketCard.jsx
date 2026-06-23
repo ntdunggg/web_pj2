@@ -24,9 +24,9 @@ export const TicketCard = ({ ticket, showDetails }) => {
       <div className="bg-gradient-to-r from-primary-600 to-primary-800 p-4 text-white">
         <div className="flex justify-between items-start">
           <div>
-            <h3 className="text-lg font-bold text-white">{showDetails.name}</h3>
+            <h3 className="text-lg font-bold text-white">{showDetails?.name || 'Unknown Show'}</h3>
             <p className="text-sm opacity-90 mt-1 text-blue-100">
-              {formatDateTime(showDetails.date)}
+              {formatDateTime(showDetails?.date)}
             </p>
           </div>
           <Badge variant={getStatusVariant(ticket.status)}>
@@ -81,9 +81,9 @@ export const TicketCard = ({ ticket, showDetails }) => {
                 <QRCodeSVG 
                   value={JSON.stringify({
                     ticketId: ticket.id,
-                    showId: showDetails.id,
+                    showId: showDetails?.id || '',
                     seatNumber: ticket.seatNumber,
-                    date: showDetails.date,
+                    date: showDetails?.date || '',
                   })}
                   size={150}
                   level="H"

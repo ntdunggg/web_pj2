@@ -68,77 +68,69 @@ export const ReportsAndCharts = () => {
 
       {/* Summary Cards */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-        <Card>
-          <CardContent className="p-6 bg-white">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm text-gray-500">Total Revenue</p>
-                <p className="text-3xl font-bold text-gray-900 mt-1">
-                  ${revenueData.totalRevenue.toFixed(2)}
-                </p>
-              </div>
-              <div className="p-3 bg-green-50 rounded-full">
-                <DollarSign className="h-6 w-6 text-green-600" />
-              </div>
+        <div className="flex w-full flex-col justify-between rounded-3xl border border-primary/20 bg-primary/15 p-6 backdrop-blur-sm transition duration-300 hover:-translate-y-1 hover:bg-primary/20">
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-sm text-gray-500">Total Revenue</p>
+              <p className="text-3xl font-bold text-gray-900 mt-1">
+                ${revenueData.totalRevenue.toFixed(2)}
+              </p>
             </div>
-          </CardContent>
-        </Card>
+            <div className="p-3 bg-green-50 rounded-full">
+              <DollarSign className="h-6 w-6 text-green-600" />
+            </div>
+          </div>
+        </div>
 
-        <Card>
-          <CardContent className="p-6 bg-white">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm text-gray-500">Total Bookings</p>
-                <p className="text-3xl font-bold text-gray-900 mt-1">
-                  {totalBookings}
-                </p>
-              </div>
-              <div className="p-3 bg-blue-50 rounded-full">
-                <TrendingUp className="h-6 w-6 text-blue-600" />
-              </div>
+        <div className="flex w-full flex-col justify-between rounded-3xl border border-primary/20 bg-primary/15 p-6 backdrop-blur-sm transition duration-300 hover:-translate-y-1 hover:bg-primary/20">
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-sm text-gray-500">Total Bookings</p>
+              <p className="text-3xl font-bold text-gray-900 mt-1">
+                {totalBookings}
+              </p>
             </div>
-          </CardContent>
-        </Card>
+            <div className="p-3 bg-blue-50 rounded-full">
+              <TrendingUp className="h-6 w-6 text-blue-600" />
+            </div>
+          </div>
+        </div>
 
-        <Card>
-          <CardContent className="p-6 bg-white">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm text-gray-500">Tickets Sold</p>
-                <p className="text-3xl font-bold text-gray-900 mt-1">
-                  {totalSeats}
-                </p>
-              </div>
-              <div className="p-3 bg-purple-50 rounded-full">
-                <Ticket className="h-6 w-6 text-purple-600" />
-              </div>
+        <div className="flex w-full flex-col justify-between rounded-3xl border border-primary/20 bg-primary/15 p-6 backdrop-blur-sm transition duration-300 hover:-translate-y-1 hover:bg-primary/20">
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-sm text-gray-500">Tickets Sold</p>
+              <p className="text-3xl font-bold text-gray-900 mt-1">
+                {totalSeats}
+              </p>
             </div>
-          </CardContent>
-        </Card>
+            <div className="p-3 bg-purple-50 rounded-full">
+              <Ticket className="h-6 w-6 text-purple-600" />
+            </div>
+          </div>
+        </div>
 
-        <Card>
-          <CardContent className="p-6 bg-white">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm text-gray-500">Avg. Occupancy</p>
-                <p className="text-3xl font-bold text-gray-900 mt-1">
-                  {(occupancyData.reduce((sum, show) => sum + parseFloat(show.occupancyRate), 0) / occupancyData.length).toFixed(1)}%
-                </p>
-              </div>
-              <div className="p-3 bg-yellow-50 rounded-full">
-                <Users className="h-6 w-6 text-yellow-600" />
-              </div>
+        <div className="flex w-full flex-col justify-between rounded-3xl border border-primary/20 bg-primary/15 p-6 backdrop-blur-sm transition duration-300 hover:-translate-y-1 hover:bg-primary/20">
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-sm text-gray-500">Avg. Occupancy</p>
+              <p className="text-3xl font-bold text-gray-900 mt-1">
+                {(occupancyData.reduce((sum, show) => sum + parseFloat(show.occupancyRate), 0) / occupancyData.length).toFixed(1)}%
+              </p>
             </div>
-          </CardContent>
-        </Card>
+            <div className="p-3 bg-yellow-50 rounded-full">
+              <Users className="h-6 w-6 text-yellow-600" />
+            </div>
+          </div>
+        </div>
       </div>
 
       {/* Revenue by Show */}
-      <Card>
-        <CardHeader>
+      <div className="flex w-full flex-col justify-between rounded-3xl border border-primary/20 bg-primary/15 p-6 backdrop-blur-sm transition duration-300 hover:bg-primary/20">
+        <div className="pb-4 mb-4 border-b border-primary/10">
           <h3 className="text-xl font-semibold text-gray-900">Revenue by Show</h3>
-        </CardHeader>
-        <CardContent className="bg-white">
+        </div>
+        <div>
           <ResponsiveContainer width="100%" height={300}>
             <BarChart data={revenueData.revenueByShow}>
               <CartesianGrid stroke="#e5e7eb" strokeDasharray="3 3" opacity={0.5} />
@@ -152,16 +144,16 @@ export const ReportsAndCharts = () => {
               <Bar dataKey="revenue" fill="#3b82f6" name="Revenue" />
             </BarChart>
           </ResponsiveContainer>
-        </CardContent>
-      </Card>
+        </div>
+      </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Payment Methods */}
-        <Card>
-          <CardHeader>
+        <div className="flex w-full flex-col justify-between rounded-3xl border border-primary/20 bg-primary/15 p-6 backdrop-blur-sm transition duration-300 hover:bg-primary/20">
+          <div className="pb-4 mb-4 border-b border-primary/10">
             <h3 className="text-xl font-semibold text-gray-900">Payment Methods</h3>
-          </CardHeader>
-          <CardContent className="bg-white">
+          </div>
+          <div>
             <ResponsiveContainer width="100%" height={300}>
               <PieChart>
                 <Pie
@@ -189,21 +181,21 @@ export const ReportsAndCharts = () => {
                 <div key={method.name} className="flex justify-between items-center">
                   <div className="flex items-center gap-2">
                     <div className="w-4 h-4 rounded" style={{ backgroundColor: method.color }}></div>
-                    <span className="text-sm text-gray-600">{method.name}</span>
+                    <span className="text-sm text-gray-650 text-gray-600">{method.name}</span>
                   </div>
                   <span className="text-sm font-semibold text-gray-900">${method.value.toFixed(2)}</span>
                 </div>
               ))}
             </div>
-          </CardContent>
-        </Card>
+          </div>
+        </div>
 
         {/* Seat Occupancy */}
-        <Card>
-          <CardHeader>
+        <div className="flex w-full flex-col justify-between rounded-3xl border border-primary/20 bg-primary/15 p-6 backdrop-blur-sm transition duration-300 hover:bg-primary/20">
+          <div className="pb-4 mb-4 border-b border-primary/10">
             <h3 className="text-xl font-semibold text-gray-900">Seat Occupancy</h3>
-          </CardHeader>
-          <CardContent className="bg-white">
+          </div>
+          <div>
             <ResponsiveContainer width="100%" height={300}>
               <BarChart data={occupancyData} layout="horizontal">
                 <CartesianGrid stroke="#e5e7eb" strokeDasharray="3 3" opacity={0.5} />
@@ -217,16 +209,16 @@ export const ReportsAndCharts = () => {
                 <Bar dataKey="availableSeats" fill="#e5e7eb" name="Available" />
               </BarChart>
             </ResponsiveContainer>
-          </CardContent>
-        </Card>
+          </div>
+        </div>
       </div>
 
-      {/* Detailed Occupancy Table */}
-      <Card>
-        <CardHeader>
+      {/* Detailed Seat Occupancy Table */}
+      <div className="flex w-full flex-col justify-between rounded-3xl border border-primary/20 bg-primary/15 p-6 backdrop-blur-sm transition duration-300 hover:bg-primary/20">
+        <div className="pb-4 mb-4 border-b border-primary/10">
           <h3 className="text-xl font-semibold text-gray-900">Detailed Seat Occupancy</h3>
-        </CardHeader>
-        <CardContent className="bg-white">
+        </div>
+        <div>
           <div className="overflow-x-auto">
             <table className="w-full border-collapse rounded-md overflow-hidden text-nowrap border border-gray-200">
               <thead>
@@ -277,8 +269,8 @@ export const ReportsAndCharts = () => {
               </tbody>
             </table>
           </div>
-        </CardContent>
-      </Card>
+        </div>
+      </div>
     </div>
   );
 };

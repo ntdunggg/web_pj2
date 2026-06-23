@@ -56,7 +56,7 @@ export const HomePage = () => {
     <Layout>
       <div className="space-y-8">
         {/* Hero Section */}
-        <div className="bg-gradient-to-r from-primary-600 to-primary-800 rounded-3xl p-8 md:p-12 text-white shadow-lg">
+        <div className="bg-gradient-to-r from-primary-600/60 to-primary-800/60 rounded-3xl p-8 md:p-12 text-white shadow-lg backdrop-blur-sm">
           <h1 className="text-4xl md:text-5xl font-bold mb-4 text-white">
             Welcome to NTDFilm
           </h1>
@@ -70,7 +70,7 @@ export const HomePage = () => {
           <h2 className="text-2xl font-bold text-gray-900 mb-6">
             Upcoming Shows
           </h2>
-          
+
           {shows.length === 0 ? (
             <Alert variant="info">
               No shows available at the moment. Check back soon!
@@ -92,7 +92,7 @@ const ShowCard = ({ show }) => {
   const isWednesday = isDateWednesday(show.date);
 
   return (
-    <div className="flex w-full flex-col justify-between bg-white rounded-lg shadow-md border border-gray-200 overflow-hidden hover:shadow-lg transition-all duration-300 h-full text-gray-900">
+    <div className="flex w-full flex-col justify-between rounded-3xl border border-primary/20 bg-primary/15 p-3 backdrop-blur-sm transition duration-300 hover:-translate-y-1 hover:bg-primary/12">
       <div>
         {/* Show Image */}
         <div className="relative aspect-video overflow-hidden">

@@ -86,19 +86,17 @@ export const PromotionManagement = () => {
       )}
 
       {/* Wednesday Discount Info */}
-      <Card className="border border-primary-200 bg-primary-50 rounded-lg shadow-sm">
-        <CardContent className="p-4">
-          <div className="flex items-start gap-3">
-            <Tag className="h-6 w-6 text-primary-600 flex-shrink-0 mt-1" />
-            <div>
-              <h3 className="font-semibold text-primary-900">Wednesday 30% Discount</h3>
-              <p className="text-sm text-primary-800 mt-1">
-                Automatically applied to all shows scheduled on Wednesdays. This is a system-wide discount and cannot be disabled.
-              </p>
-            </div>
+      <div className="flex w-full flex-col justify-between rounded-3xl border border-primary/20 bg-primary/15 p-6 backdrop-blur-sm transition duration-300 hover:bg-primary/20">
+        <div className="flex items-start gap-3">
+          <Tag className="h-6 w-6 text-primary-600 flex-shrink-0 mt-1" />
+          <div>
+            <h3 className="font-semibold text-primary-900">Wednesday 30% Discount</h3>
+            <p className="text-sm text-primary-800 mt-1">
+              Automatically applied to all shows scheduled on Wednesdays. This is a system-wide discount and cannot be disabled.
+            </p>
           </div>
-        </CardContent>
-      </Card>
+        </div>
+      </div>
 
       {showForm ? (
         <PromoForm 
@@ -108,36 +106,38 @@ export const PromotionManagement = () => {
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {promotions.map((promo) => (
-            <Card key={promo.id}>
-              <CardContent className="p-6 space-y-4 bg-white">
-                <div className="flex justify-between items-start">
-                  <div className="flex items-center gap-2">
-                    {promo.type === 'percentage' ? (
-                      <Percent className="h-5 w-5 text-primary-600" />
-                    ) : (
-                      <DollarSign className="h-5 w-5 text-primary-600" />
-                    )}
-                    <Badge variant="primary" className="text-lg font-mono">
-                      {promo.code}
+            <div key={promo.id} className="flex w-full flex-col justify-between rounded-3xl border border-primary/20 bg-primary/15 p-6 backdrop-blur-sm transition duration-300 hover:-translate-y-1 hover:bg-primary/20">
+              <div className="space-y-4 flex-1 flex flex-col justify-between">
+                <div className="space-y-4">
+                  <div className="flex justify-between items-start">
+                    <div className="flex items-center gap-2">
+                      {promo.type === 'percentage' ? (
+                        <Percent className="h-5 w-5 text-primary-600" />
+                      ) : (
+                        <DollarSign className="h-5 w-5 text-primary-600" />
+                      )}
+                      <Badge variant="primary" className="text-lg font-mono">
+                        {promo.code}
+                      </Badge>
+                    </div>
+                    <Badge variant={promo.active ? 'success' : 'default'}>
+                      {promo.active ? 'Active' : 'Inactive'}
                     </Badge>
                   </div>
-                  <Badge variant={promo.active ? 'success' : 'default'}>
-                    {promo.active ? 'Active' : 'Inactive'}
-                  </Badge>
-                </div>
 
-                <p className="text-gray-600 text-sm">
-                  {promo.description}
-                </p>
-
-                <div className="bg-primary-50 border border-primary-100 rounded-lg p-3">
-                  <p className="text-2xl font-bold text-primary-600">
-                    {promo.type === 'percentage' ? `${promo.value}%` : `$${promo.value}`}
-                    <span className="text-sm text-gray-500 font-normal ml-2">off</span>
+                  <p className="text-gray-600 text-sm">
+                    {promo.description}
                   </p>
+
+                  <div className="bg-primary/10 border border-primary/20 rounded-lg p-3">
+                    <p className="text-2xl font-bold text-primary-600">
+                      {promo.type === 'percentage' ? `${promo.value}%` : `$${promo.value}`}
+                      <span className="text-sm text-gray-500 font-normal ml-2">off</span>
+                    </p>
+                  </div>
                 </div>
 
-                <div className="flex gap-2 pt-2">
+                <div className="flex gap-2 pt-4 mt-auto">
                   <Button
                     variant="outline"
                     size="sm"
@@ -156,8 +156,8 @@ export const PromotionManagement = () => {
                     <Trash2 className="h-4 w-4" />
                   </Button>
                 </div>
-              </CardContent>
-            </Card>
+              </div>
+            </div>
           ))}
         </div>
       )}
@@ -210,18 +210,16 @@ const PromoForm = ({ promotion, onClose }) => {
   };
 
   return (
-    <Card>
-      <CardHeader>
-        <div className="flex justify-between items-center">
-          <h3 className="text-xl font-semibold text-gray-900">
-            {promotion ? 'Edit Promotion' : 'Create New Promotion'}
-          </h3>
-          <Button variant="ghost" size="sm" onClick={() => onClose()} className="cursor-pointer">
-            <X className="h-5 w-5" />
-          </Button>
-        </div>
-      </CardHeader>
-      <CardContent>
+    <div className="flex w-full flex-col justify-between rounded-3xl border border-primary/20 bg-primary/15 p-6 backdrop-blur-sm transition duration-300 hover:bg-primary/20">
+      <div className="flex justify-between items-center pb-4 mb-4 border-b border-primary/10">
+        <h3 className="text-xl font-semibold text-gray-900">
+          {promotion ? 'Edit Promotion' : 'Create New Promotion'}
+        </h3>
+        <Button variant="ghost" size="sm" onClick={() => onClose()} className="cursor-pointer">
+          <X className="h-5 w-5" />
+        </Button>
+      </div>
+      <div>
         {error && (
           <Alert variant="error" className="mb-4">
             {error}
@@ -316,7 +314,7 @@ const PromoForm = ({ promotion, onClose }) => {
             </Button>
           </div>
         </form>
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   );
 };
