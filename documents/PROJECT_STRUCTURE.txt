@@ -1,0 +1,794 @@
+================================================================================
+    5.1. MÔI TRƯỜNG VÀ CÔNG CỤ - 5.2. CẤU TRÚC THỨ MỤC CHƯƠNG TRÌNH
+            PERFORMANCE TICKET BOOKING SYSTEM
+================================================================================
+
+Tài liệu mô tả môi trường phát triển, công cụ và cấu trúc thư mục dự án
+Ngày cập nhật: 27/01/2026
+
+================================================================================
+5.1. MÔI TRƯỜNG VÀ CÔNG CỤ
+================================================================================
+
+5.1.1. IDE (Integrated Development Environment)
+------------------------------------------------
+• Visual Studio Code (VS Code) v1.85+
+  - Trình soạn thảo code chính cho dự án
+  - Hỗ trợ IntelliSense, debugging, Git integration
+  - Extensions sử dụng:
+    + ESLint - Kiểm tra lỗi code JavaScript/React
+    + Prettier - Format code tự động
+    + Tailwind CSS IntelliSense - Gợi ý class Tailwind
+    + ES7+ React/Redux snippets - Code snippets cho React
+    + Auto Rename Tag - Đổi tên tag HTML tự động
+    + Path Intellisense - Gợi ý đường dẫn file
+
+5.1.2. Framework và Thư Viện Chính
+-----------------------------------
+
+A. FRONTEND FRAMEWORK
+---------------------
+• React.js v19.2.0
+  - Library JavaScript để xây dựng giao diện người dùng
+  - Component-based architecture
+  - Virtual DOM để tối ưu hiệu suất
+  - Hooks API (useState, useEffect, useContext, custom hooks)
+  - Functional Components
+
+• React Router DOM v7.12.0
+  - Thư viện routing cho React Single Page Application
+  - Client-side routing
+  - Protected routes (yêu cầu authentication)
+  - Dynamic route parameters
+
+B. BUILD TOOL & BUNDLER
+-----------------------
+• Vite (Rolldown-Vite) v7.2.5
+  - Build tool thế hệ mới, cực nhanh
+  - Hot Module Replacement (HMR) - Cập nhật code ngay lập tức
+  - Optimized production builds
+  - Native ES modules support
+  - Plugin ecosystem
+
+C. CSS FRAMEWORK
+----------------
+• Tailwind CSS v3.4.19
+  - Utility-first CSS framework
+  - Rapid UI development
+  - Responsive design utilities
+  - Custom color palette
+  - JIT (Just-In-Time) compiler
+  - PostCSS v8.5.6 - CSS processor
+  - Autoprefixer v10.4.23 - Tự động thêm vendor prefixes
+
+D. UI COMPONENT LIBRARIES
+--------------------------
+• Lucide React v0.562.0
+  - Icon library với 1000+ icons
+  - Customizable size và color
+  - Tree-shakeable (chỉ import icons sử dụng)
+
+• Recharts v3.6.0
+  - Thư viện biểu đồ cho React
+  - Line charts, Bar charts, Pie charts
+  - Responsive và animated
+  - Dùng cho Admin Dashboard reports
+
+• qrcode.react v4.2.0
+  - Generate QR codes cho tickets
+  - SVG và Canvas rendering
+  - Customizable size và error correction level
+
+E. UTILITY LIBRARIES
+--------------------
+• Axios v1.13.2
+  - HTTP client để gọi API
+  - Promise-based
+  - Request/Response interceptors
+  - Automatic JSON transformation
+
+• date-fns v4.1.0
+  - Modern JavaScript date utility library
+  - Format dates, calculate differences
+  - Modular (import chỉ functions cần dùng)
+  - i18n support
+
+• clsx v2.1.1
+  - Utility để construct className strings
+  - Conditional classes
+
+• tailwind-merge v3.4.0
+  - Merge Tailwind CSS classes hiệu quả
+  - Resolve conflicts between classes
+
+F. DEVELOPMENT TOOLS
+--------------------
+• ESLint v9.39.1
+  - JavaScript linter
+  - Kiểm tra lỗi code, enforce coding standards
+  - Plugins:
+    + eslint-plugin-react-hooks - Rules cho React Hooks
+    + eslint-plugin-react-refresh - Rules cho HMR
+
+5.1.3. Ngôn Ngữ Lập Trình
+--------------------------
+• HTML5
+  - Semantic HTML elements
+  - Modern HTML5 APIs
+  - SEO-friendly structure
+
+• CSS3
+  - Flexbox và Grid layout
+  - Custom properties (CSS variables)
+  - Media queries cho responsive design
+  - Transitions và animations
+  - Tailwind utility classes
+
+• JavaScript (ES6+)
+  - Modern JavaScript features:
+    + Arrow functions
+    + Destructuring
+    + Spread/Rest operators
+    + Template literals
+    + Async/Await
+    + Modules (import/export)
+    + Optional chaining (?.)
+    + Nullish coalescing (??)
+
+• JSX (JavaScript XML)
+  - Syntax extension cho React
+  - Viết HTML-like code trong JavaScript
+  - Component composition
+
+5.1.4. Package Manager
+----------------------
+• npm (Node Package Manager) v10+
+  - Quản lý dependencies
+  - Scripts automation
+  - Registry for JavaScript packages
+
+5.1.5. Version Control
+----------------------
+• Git v2.40+
+  - Distributed version control system
+  - Branch management
+  - Commit history
+
+• GitHub
+  - Remote repository hosting
+  - Collaboration platform
+  - Issues tracking
+
+5.1.6. Browser DevTools
+-----------------------
+• Chrome DevTools / Firefox DevTools
+  - Inspect HTML/CSS
+  - Debug JavaScript
+  - Network monitoring
+  - React DevTools extension
+  - Performance profiling
+
+5.1.7. Môi Trường Runtime
+--------------------------
+• Node.js v18+ (LTS)
+  - JavaScript runtime environment
+  - Required for development tools
+  - npm scripts execution
+
+• Modern Web Browsers
+  - Chrome v120+
+  - Firefox v120+
+  - Safari v17+
+  - Edge v120+
+
+================================================================================
+5.2. CẤU TRÚC THƯ MỤC CHƯƠNG TRÌNH
+================================================================================
+
+5.2.1. Tổng Quan Cấu Trúc Dự Án
+--------------------------------
+
+Dự án Performance Ticket Booking System sử dụng kiến trúc Component-based với
+React.js, tổ chức code theo nguyên tắc Separation of Concerns và Single 
+Responsibility Principle.
+
+Cấu trúc thư mục được thiết kế để:
+  • Dễ dàng tìm kiếm và bảo trì code
+  • Tách biệt business logic và UI components
+  • Tái sử dụng code hiệu quả
+  • Scale dự án dễ dàng khi mở rộng tính năng
+
+
+5.2.2. Sơ Đồ Cây Thư Mục Chi Tiết
+----------------------------------
+
+================================================================================
+Hình 7.1 - Cấu Trúc Dự Án Web Demo
+================================================================================
+
+ticket-booking-frontend/
+│
+├── node_modules/                    # Thư viện dependencies (tự động tạo)
+│
+├── public/                          # Static assets
+│   └── vite.svg                     # Favicon
+│
+├── src/                             # Source code chính
+│   │
+│   ├── assets/                      # Static resources
+│   │   └── react.svg                # Images, logos
+│   │
+│   ├── components/                  # React Components
+│   │   │
+│   │   ├── ui/                      # Reusable UI Components
+│   │   │   ├── Alert.jsx            # Thông báo, cảnh báo
+│   │   │   ├── Badge.jsx            # Badges (status indicators)
+│   │   │   ├── Button.jsx           # Buttons với variants
+│   │   │   ├── Card.jsx             # Card containers
+│   │   │   ├── Input.jsx            # Form input fields
+│   │   │   └── Spinner.jsx          # Loading spinner
+│   │   │
+│   │   ├── admin/                   # Admin-specific components
+│   │   │   ├── EventManagement.jsx  # Quản lý events
+│   │   │   ├── PromotionManagement.jsx # Quản lý promotions
+│   │   │   └── ReportsCharts.jsx    # Biểu đồ báo cáo
+│   │   │
+│   │   ├── Layout.jsx               # Layout wrapper với navbar/footer
+│   │   ├── Navbar.jsx               # Navigation bar
+│   │   ├── ShowCard.jsx             # Card hiển thị show
+│   │   ├── SeatingChart.jsx         # Sơ đồ chọn ghế (500 seats)
+│   │   ├── BookingSummary.jsx       # Tóm tắt booking
+│   │   ├── PaymentForm.jsx          # Form thanh toán
+│   │   └── TicketCard.jsx           # Card hiển thị vé với QR
+│   │
+│   ├── pages/                       # Page Components (Routes)
+│   │   ├── HomePage.jsx             # Trang chủ - danh sách shows
+│   │   ├── ShowDetailsPage.jsx      # Chi tiết show + booking
+│   │   ├── BookingSuccessPage.jsx   # Xác nhận đặt vé thành công
+│   │   ├── MyTicketsPage.jsx        # Danh sách vé đã đặt
+│   │   ├── LoginPage.jsx            # Đăng nhập
+│   │   ├── RegisterPage.jsx         # Đăng ký
+│   │   ├── StaffDashboardPage.jsx   # Dashboard cho staff
+│   │   └── AdminDashboardPage.jsx   # Dashboard cho admin/manager
+│   │
+│   ├── contexts/                    # React Contexts (Global State)
+│   │   └── AuthContext.jsx          # Authentication context
+│   │
+│   ├── hooks/                       # Custom React Hooks
+│   │   ├── useBooking.js            # Logic booking và pricing
+│   │   ├── useLocalStorage.js       # Persist data to localStorage
+│   │   └── useWednesdayDiscount.js  # Logic giảm giá thứ 4
+│   │
+│   ├── services/                    # Business Logic & API calls
+│   │   ├── index.js                 # Service provider (chuyển đổi API/Mock)
+│   │   ├── authService.js           # Authentication API
+│   │   ├── showService.js           # Shows API
+│   │   ├── bookingService.js        # Bookings API
+│   │   ├── promotionService.js      # Promotions API
+│   │   ├── reportService.js         # Reports API
+│   │   └── mockService.js           # Mock data cho test mode
+│   │
+│   ├── utils/                       # Utility functions
+│   │   ├── constants.js             # Constants (roles, statuses, zones)
+│   │   ├── cn.js                    # className utility
+│   │   ├── dateUtils.js             # Date formatting utilities
+│   │   ├── priceUtils.js            # Price calculation utilities
+│   │   ├── ticketUtils.js           # Ticket ID generation
+│   │   └── validators.js            # Form validation functions
+│   │
+│   ├── App.jsx                      # Root component với routing
+│   ├── App.css                      # App-specific styles
+│   ├── main.jsx                     # Entry point - mount React app
+│   └── index.css                    # Global styles + Tailwind imports
+│
+├── documents/                       # Tài liệu dự án
+│   ├── UI_DESIGN_STANDARDS.txt      # Quy chuẩn giao diện
+│   └── PROJECT_STRUCTURE.txt        # File này
+│
+├── .env                             # Environment variables (không commit)
+├── .env.example                     # Environment template
+├── .gitignore                       # Git ignore rules
+├── eslint.config.js                 # ESLint configuration
+├── index.html                       # HTML entry point
+├── package.json                     # Dependencies và scripts
+├── package-lock.json                # Dependency lock file
+├── postcss.config.js                # PostCSS configuration
+├── tailwind.config.js               # Tailwind CSS configuration
+├── vite.config.js                   # Vite build configuration
+├── test_frontend.sh                 # Script test frontend
+├── README.md                        # Hướng dẫn dự án
+├── QUICK_START.md                   # Quick start guide
+└── TECHNICAL_DOCS.md                # Tài liệu kỹ thuật
+
+================================================================================
+
+
+5.2.3. Mô Tả Chi Tiết Các Thư Mục
+----------------------------------
+
+A. THƯ MỤC ROOT (/)
+-------------------
+• node_modules/
+  Chứa tất cả các thư viện dependencies được cài đặt qua npm.
+  Không commit vào Git. Tự động tạo khi chạy: npm install
+
+• public/
+  Chứa static assets không cần xử lý qua bundler.
+  Files trong đây được serve trực tiếp với public URL.
+
+• src/
+  Thư mục source code chính của ứng dụng.
+  Tất cả code JavaScript/React nằm trong đây.
+
+• documents/
+  Tài liệu dự án, quy chuẩn, hướng dẫn.
+
+
+B. THƯ MỤC SRC/COMPONENTS
+--------------------------
+Chứa tất cả React components được tái sử dụng trong dự án.
+
+• components/ui/
+  Base UI components - các component cơ bản nhất, không chứa business logic.
+  Có thể tái sử dụng trong bất kỳ project nào.
+  
+  - Alert.jsx: Component hiển thị thông báo (success, error, warning, info)
+  - Badge.jsx: Hiển thị trạng thái (status badges)
+  - Button.jsx: Button với nhiều variants (primary, secondary, outline, danger)
+  - Card.jsx: Container component với CardHeader, CardContent, CardFooter
+  - Input.jsx: Input fields với label và error handling
+  - Spinner.jsx: Loading spinner với nhiều sizes
+
+• components/admin/
+  Components dành riêng cho admin dashboard.
+  
+  - EventManagement.jsx: CRUD events/shows
+  - PromotionManagement.jsx: CRUD promotions
+  - ReportsCharts.jsx: Biểu đồ doanh thu (Recharts)
+
+• components/ (root level)
+  Feature-specific components:
+  
+  - Layout.jsx: Wrapper component bao quanh tất cả pages
+                Chứa Navbar và Footer
+  
+  - Navbar.jsx: Navigation bar với logo, menu, user info
+                Responsive (hamburger menu trên mobile)
+  
+  - ShowCard.jsx: Hiển thị thông tin show dạng card
+                  Image, title, date, location, price, "Book Now" button
+  
+  - SeatingChart.jsx: Component phức tạp nhất
+                      Hiển thị 500 ghế (Zone A, Zone B, 2nd Floor)
+                      Interactive seat selection
+                      Color-coded by zone và status
+  
+  - BookingSummary.jsx: Sidebar hiển thị tóm tắt booking
+                        Selected seats, pricing, discounts, total
+  
+  - PaymentForm.jsx: Form nhập thông tin thanh toán
+                     Credit card validation (Luhn algorithm)
+  
+  - TicketCard.jsx: Hiển thị vé đã đặt
+                    QR code, show details, seat info, status
+
+
+C. THƯ MỤC SRC/PAGES
+---------------------
+Các page components tương ứng với routes trong ứng dụng.
+Mỗi file là một trang đầy đủ.
+
+• HomePage.jsx
+  Trang chủ, hiển thị grid các shows đang bán vé
+  Filter, search shows
+  
+• ShowDetailsPage.jsx
+  Chi tiết một show cụ thể
+  SeatingChart để chọn ghế
+  BookingSummary
+  PaymentForm
+  
+• BookingSuccessPage.jsx
+  Trang xác nhận sau khi đặt vé thành công
+  Hiển thị booking ID, QR code
+  
+• MyTicketsPage.jsx
+  Danh sách tất cả vé đã đặt của user
+  Hiển thị dạng TicketCard
+  Filter by status
+  
+• LoginPage.jsx
+  Form đăng nhập
+  Redirect sau khi login thành công
+  
+• RegisterPage.jsx
+  Form đăng ký tài khoản mới
+  
+• StaffDashboardPage.jsx
+  Dashboard cho Staff role
+  Xem và quản lý bookings
+  
+• AdminDashboardPage.jsx
+  Dashboard cho Manager/Accountant roles
+  Event management, Promotion management, Reports
+
+
+D. THƯ MỤC SRC/CONTEXTS
+------------------------
+React Context API để quản lý global state.
+
+• AuthContext.jsx
+  Quản lý authentication state
+  Provide user info, login, logout, register functions
+  Check user roles (customer, staff, manager, accountant)
+
+
+E. THƯ MỤC SRC/HOOKS
+---------------------
+Custom React Hooks - tái sử dụng stateful logic.
+
+• useBooking.js
+  Logic tính toán pricing
+  Quản lý selected seats
+  Apply promotions và Wednesday discount
+  
+• useLocalStorage.js
+  Persist state vào localStorage
+  Sync với localStorage changes
+  
+• useWednesdayDiscount.js
+  Check xem show có phải thứ 4 không
+  Tự động apply 30% discount
+
+
+F. THƯ MỤC SRC/SERVICES
+------------------------
+Business logic layer và API communication.
+
+• index.js (Service Provider)
+  Central service provider
+  Switch giữa real API và mock service dựa vào test mode
+  
+• authService.js
+  API calls: login, register, logout, getCurrentUser
+  
+• showService.js
+  API calls: getAll shows, getById, create, update, delete
+  
+• bookingService.js
+  API calls: create booking, getMyBookings, getAllBookings, updateStatus
+  
+• promotionService.js
+  API calls: getAll promotions, create, update, delete
+  
+• reportService.js
+  API calls: getRevenue, getBookingStats, getPopularShows
+  
+• mockService.js
+  Mock implementation của tất cả services
+  Sử dụng localStorage để persist data
+  Generate mock data (shows, users, bookings)
+  Cho phép test frontend không cần backend
+
+
+G. THƯ MỤC SRC/UTILS
+---------------------
+Utility functions và constants.
+
+• constants.js
+  USER_ROLES: customer, staff, manager, accountant
+  BOOKING_STATUS: pending, success, rejected
+  SEAT_STATUS: available, selected, sold
+  ZONES: zone_a, zone_b, level_2 (2nd Floor)
+  ZONE_CONFIG: rows, cols, price per zone
+  
+• cn.js
+  Utility function để merge className strings
+  Sử dụng clsx và tailwind-merge
+  
+• dateUtils.js
+  formatDate(), formatDateTime(), formatTime()
+  isWednesday(), getDayOfWeek()
+  
+• priceUtils.js
+  formatPrice(), calculateTotal()
+  applyDiscount(), calculateWednesdayDiscount()
+  
+• ticketUtils.js
+  generateTicketId() - Generate unique ticket IDs
+  Format: TKT-YYYYMMDD-XXXX
+  
+• validators.js
+  validateEmail(), validatePhone()
+  validateCreditCard() - Luhn algorithm
+  validateRequired(), validateLength()
+
+
+H. FILES CHÍNH Ở ROOT
+----------------------
+• main.jsx
+  Entry point của React application
+  Mount React app vào DOM node #root
+  Wrap với StrictMode
+  
+• App.jsx
+  Root component
+  Setup React Router với tất cả routes
+  Wrap với AuthProvider
+  Define ProtectedRoute component
+  
+• index.css
+  Global CSS
+  Import Tailwind directives: @tailwind base, components, utilities
+  Custom global styles
+  
+• App.css
+  Component-specific styles cho App
+  (Mostly dùng Tailwind nên file này ít code)
+
+
+I. CONFIGURATION FILES
+-----------------------
+• package.json
+  Project metadata
+  Dependencies list
+  Scripts: dev, build, lint, preview
+  
+• vite.config.js
+  Vite configuration
+  Plugins: @vitejs/plugin-react
+  Build settings, dev server settings
+  
+• tailwind.config.js
+  Tailwind CSS configuration
+  Custom colors (primary palette)
+  Content paths
+  Extend default theme
+  
+• postcss.config.js
+  PostCSS configuration
+  Plugins: tailwindcss, autoprefixer
+  
+• eslint.config.js
+  ESLint rules và configuration
+  React-specific rules
+  Code quality standards
+  
+• .env
+  Environment variables
+  VITE_TEST_MODE=true/false
+  API URLs (khi có backend)
+  Không commit file này
+  
+• .env.example
+  Template cho .env
+  Commit file này để team members biết cần config gì
+
+
+J. DOCUMENTATION FILES
+-----------------------
+• README.md
+  Tổng quan dự án
+  Installation instructions
+  How to run
+  Features list
+  
+• QUICK_START.md
+  Quick start guide
+  Test credentials
+  Common tasks
+  
+• TECHNICAL_DOCS.md
+  Technical documentation
+  Architecture overview
+  API documentation
+  Component documentation
+  
+• documents/UI_DESIGN_STANDARDS.txt
+  UI/UX design standards
+  Color system, typography, spacing
+  Component guidelines
+  
+• documents/PROJECT_STRUCTURE.txt
+  File này - mô tả cấu trúc dự án
+
+
+5.2.4. Luồng Dữ Liệu (Data Flow)
+---------------------------------
+
+1. USER INTERACTION
+   User tương tác với UI components (buttons, forms, etc.)
+   ↓
+
+2. EVENT HANDLERS
+   Event handlers trong components xử lý user actions
+   ↓
+
+3. CUSTOM HOOKS (Optional)
+   Custom hooks xử lý complex logic (useBooking, useWednesdayDiscount)
+   ↓
+
+4. SERVICE LAYER
+   Components gọi functions từ services/
+   serviceProvider quyết định dùng real API hay mockService
+   ↓
+
+5. API / MOCK SERVICE
+   - Nếu test mode: mockService xử lý với localStorage
+   - Nếu production: API service gọi backend API
+   ↓
+
+6. STATE UPDATE
+   Nhận response, update component state hoặc context
+   ↓
+
+7. RE-RENDER
+   React re-render components với data mới
+   UI cập nhật reflect changes
+
+
+5.2.5. Routing Structure
+-------------------------
+
+Public Routes (Không cần đăng nhập):
+  /                    → HomePage
+  /login               → LoginPage
+  /register            → RegisterPage
+  /show/:id            → ShowDetailsPage
+
+Protected Routes - Customer only:
+  /booking-success     → BookingSuccessPage
+  /my-tickets          → MyTicketsPage
+
+Protected Routes - Staff only:
+  /staff/bookings      → StaffDashboardPage
+
+Protected Routes - Manager/Accountant only:
+  /admin/dashboard     → AdminDashboardPage
+
+All undefined routes → Redirect to HomePage
+
+
+5.2.6. State Management Strategy
+---------------------------------
+
+Global State (React Context):
+  • AuthContext: User authentication, user info, roles
+
+Local State (useState):
+  • Component-specific state
+  • Form inputs
+  • UI states (loading, error)
+
+Custom Hooks State:
+  • useBooking: Booking state, pricing calculations
+  • useWednesdayDiscount: Discount logic
+
+Persistent State (localStorage):
+  • User authentication token
+  • User profile data
+  • Mock data (trong test mode)
+  • Recently viewed shows
+
+
+5.2.7. Styling Architecture
+----------------------------
+
+1. Tailwind Utility Classes (Primary)
+   • 95% styling dùng Tailwind utilities
+   • Responsive design với breakpoint prefixes (sm:, md:, lg:)
+   • State variants (hover:, focus:, active:)
+
+2. Component-level CSS (Minimal)
+   • App.css cho App-specific styles
+   • Chỉ dùng khi Tailwind không đủ
+
+3. Global Styles (index.css)
+   • CSS resets
+   • Custom CSS properties (--colors)
+   • Font imports
+
+4. Inline Styles (Rare)
+   • Chỉ dùng cho dynamic values
+   • VD: width dựa vào props
+
+
+5.2.8. Code Organization Principles
+------------------------------------
+
+1. SINGLE RESPONSIBILITY
+   Mỗi component, function, file có một trách nhiệm duy nhất
+
+2. DRY (Don't Repeat Yourself)
+   Tái sử dụng code qua components, hooks, utilities
+
+3. SEPARATION OF CONCERNS
+   - UI Components (components/)
+   - Business Logic (services/)
+   - Utilities (utils/)
+   - State Management (contexts/, hooks/)
+
+4. COMPONENT COMPOSITION
+   Build complex UI từ simple, reusable components
+
+5. NAMING CONVENTIONS
+   - Components: PascalCase (HomePage.jsx)
+   - Hooks: camelCase prefix with 'use' (useBooking.js)
+   - Utilities: camelCase (dateUtils.js)
+   - Constants: UPPER_SNAKE_CASE (USER_ROLES)
+
+6. FILE NAMING
+   - React components: .jsx extension
+   - Non-component JS: .js extension
+   - Match component name với filename
+
+
+5.2.9. Build và Development Workflow
+-------------------------------------
+
+Development Mode:
+  $ npm run dev
+  • Vite dev server khởi động trên http://localhost:5173
+  • Hot Module Replacement (HMR) enabled
+  • Fast refresh - code changes reflect ngay lập tức
+  • Source maps để debug
+
+Production Build:
+  $ npm run build
+  • Vite build optimized production bundle
+  • Output vào dist/ folder
+  • Minification, tree-shaking
+  • Code splitting
+  • Asset optimization
+
+Preview Production Build:
+  $ npm run preview
+  • Serve production build locally để test
+
+Linting:
+  $ npm run lint
+  • ESLint check code quality
+  • Find potential errors và anti-patterns
+
+
+5.2.10. Testing Strategy
+-------------------------
+
+Current Implementation:
+  • Manual testing qua browser
+  • Test mode với mockService
+  • Test script: ./test_frontend.sh
+
+Test Credentials:
+  • Customer: customer@test.com / password
+  • Staff: staff@test.com / password
+  • Manager: manager@test.com / password
+
+Future Enhancements:
+  • Unit tests với Jest
+  • Component tests với React Testing Library
+  • E2E tests với Cypress/Playwright
+
+
+================================================================================
+KẾT LUẬN
+================================================================================
+
+Cấu trúc dự án Performance Ticket Booking System được thiết kế với các ưu điểm:
+
+✓ Tổ chức code rõ ràng, dễ tìm kiếm
+✓ Separation of concerns - tách biệt logic và UI
+✓ Reusable components - tái sử dụng code tối đa
+✓ Scalable - dễ mở rộng khi thêm features
+✓ Maintainable - dễ bảo trì và debug
+✓ Modern tooling - build nhanh, dev experience tốt
+✓ Type-safe với JSX
+✓ Performance optimized với Vite và React
+
+Cấu trúc này tuân theo best practices của React ecosystem và chuẩn industrial
+standards, đảm bảo dự án professional và production-ready.
+
+================================================================================
+Liên hệ: Nhóm phát triển Performance Ticket Booking System
+Cập nhật lần cuối: 27/01/2026
+================================================================================
