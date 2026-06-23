@@ -30,7 +30,7 @@ export const TicketCard = ({ ticket, showDetails }) => {
             </p>
           </div>
           <Badge variant={getStatusVariant(ticket.status)}>
-            {ticket.status.toUpperCase()}
+            {ticket.status?.toUpperCase() || 'UNKNOWN'}
           </Badge>
         </div>
       </div>
@@ -47,7 +47,7 @@ export const TicketCard = ({ ticket, showDetails }) => {
             <div className="flex items-center gap-2 text-sm">
               <MapPin className="h-4 w-4 text-primary-600" />
               <span className="text-gray-500">Zone:</span>
-              <span className="font-semibold text-gray-900 capitalize">{ticket.zone.replace('_', ' ')}</span>
+              <span className="font-semibold text-gray-900 capitalize">{ticket.zone ? ticket.zone.replace('_', ' ') : 'N/A'}</span>
             </div>
             
             <div className="flex items-center gap-2 text-sm">
