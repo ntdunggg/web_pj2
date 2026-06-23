@@ -8,7 +8,7 @@ import { useWednesdayDiscount } from './useWednesdayDiscount';
  */
 export const useBooking = (show) => {
   const [selectedSeats, setSelectedSeats] = useState([]);
-  const [paymentMethod, setPaymentMethod] = useState('card');
+  const [paymentMethod, setPaymentMethod] = useState('vnpay');
   const [promotionCode, setPromotionCode] = useState('');
   const [appliedPromotion, setAppliedPromotion] = useState(null);
 
@@ -89,7 +89,7 @@ export const useBooking = (show) => {
   // Reset booking
   const resetBooking = useCallback(() => {
     setSelectedSeats([]);
-    setPaymentMethod('card');
+    setPaymentMethod('vnpay');
     setPromotionCode('');
     setAppliedPromotion(null);
   }, []);

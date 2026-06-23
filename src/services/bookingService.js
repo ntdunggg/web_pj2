@@ -31,6 +31,19 @@ export const bookingService = {
     return response.data;
   },
 
+  // Submit payment details
+  submitPayment: async ({ bookingId, method, phone, address }) => {
+    const status = method === 'online' ? 'success' : 'pending';
+    const paymentMethod = method === 'online' ? 'vnpay' : 'cash';
+    const response = await api.patch(`/bookings/${bookingId}/status`, {
+      status,
+      paymentMethod,
+      phone,
+      address,
+    });
+    return response.data;
+  },
+
   // Cancel booking
   cancel: async (id) => {
     const response = await api.delete(`/bookings/${id}`);

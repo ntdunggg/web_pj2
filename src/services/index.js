@@ -132,6 +132,13 @@ export const serviceProvider = {
     return bookingService.updateStatus(id, status);
   },
 
+  submitPayment: async ({ bookingId, userId, method, phone, address }) => {
+    if (isTestMode()) {
+      return mockService.submitPayment({ bookingId, userId, method, phone, address });
+    }
+    return bookingService.submitPayment({ bookingId, method, phone, address });
+  },
+
   // Promotions
   getPromotions: async () => {
     if (isTestMode()) {

@@ -192,6 +192,9 @@ export const StaffDashboardPage = () => {
                         Payment
                       </th>
                       <th className="p-3 font-semibold">
+                        Contact Info
+                      </th>
+                      <th className="p-3 font-semibold">
                         Status
                       </th>
                       <th className="p-3 font-semibold">
@@ -221,6 +224,20 @@ export const StaffDashboardPage = () => {
                           <Badge variant={booking.paymentMethod === 'card' ? 'primary' : 'default'}>
                             {booking.paymentMethod}
                           </Badge>
+                        </td>
+                        <td className="p-3">
+                          {booking.contactPhone ? (
+                            <div>
+                              <p className="font-semibold text-gray-900">{booking.contactPhone}</p>
+                              {booking.deliveryAddress && (
+                                <p className="text-xs text-gray-500 max-w-[200px] truncate" title={booking.deliveryAddress}>
+                                  {booking.deliveryAddress}
+                                </p>
+                              )}
+                            </div>
+                          ) : (
+                            <span className="text-gray-400">-</span>
+                          )}
                         </td>
                         <td className="p-3">
                           <div className="flex items-center gap-2">

@@ -6,11 +6,14 @@ import { Spinner } from '../components/ui/Spinner';
 import { useAuth } from '../contexts/AuthContext';
 import { serviceProvider } from '../services';
 import { formatDateTime } from '../utils/dateUtils';
+import { BookingPaymentPanel } from '../components/BookingPaymentPanel';
 
 export const MyTicketsPage = () => {
   const [bookings, setBookings] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [activePaymentId, setActivePaymentId] = useState(null);
+  const [submittingPayment, setSubmittingPayment] = useState(false);
   const { user } = useAuth();
   const location = useLocation();
 
@@ -50,6 +53,33 @@ export const MyTicketsPage = () => {
       setError(err.message);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handlePaymentSubmit = async (bookingId, paymentData) => {
+    try {
+      setSubmittingPayment(true);
+      const updatedBooking = await serviceProvider.submitPayment({
+        bookingId,
+        userId: user?.id,
+        ...paymentData,
+      });
+
+      // Enrich updated booking details with show information
+      const show = await serviceProvider.getShowById(updatedBooking.showId).catch(() => ({ id: updatedBooking.showId, name: 'Deleted/Unknown Show', date: '' }));
+      const enrichedBooking = {
+        ...updatedBooking,
+        show
+      };
+
+      setBookings((prev) =>
+        prev.map((item) => (item.id === bookingId ? enrichedBooking : item))
+      );
+      setActivePaymentId(null);
+    } catch (err) {
+      setError(err.message || 'Payment failed');
+    } finally {
+      setSubmittingPayment(false);
     }
   };
 
@@ -95,7 +125,7 @@ export const MyTicketsPage = () => {
                       <img
                         src={item.show?.image}
                         alt={item.show?.name}
-                        className="aspect-video h-auto rounded-2xl object-cover object-center md:max-w-45"
+                        className="aspect-video h-auto rounded-2xl object-cover object-center md:max-w-40"
                       />
                       <div className="flex flex-col p-4">
                         <div className="flex items-center gap-3">
@@ -121,6 +151,16 @@ export const MyTicketsPage = () => {
                             Payment method: <span className="font-medium text-gray-750 text-gray-700 capitalize">{item.paymentMethod}</span>
                           </p>
                         )}
+                        {item.contactPhone && (
+                          <p className="text-sm text-gray-500">
+                            Phone: <span className="font-medium text-gray-700">{item.contactPhone}</span>
+                          </p>
+                        )}
+                        {item.deliveryAddress && (
+                          <p className="text-sm text-gray-500">
+                            Address: <span className="font-medium text-gray-700">{item.deliveryAddress}</span>
+                          </p>
+                        )}
                       </div>
                     </div>
 
@@ -129,6 +169,14 @@ export const MyTicketsPage = () => {
                         <p className="mb-3 text-2xl font-bold text-primary-600">
                           ${item.totalAmount?.toFixed(2)}
                         </p>
+                        {!isPaid && (
+                          <button
+                            onClick={() => setActivePaymentId((prev) => (prev === item.id ? null : item.id))}
+                            className="mb-3 cursor-pointer rounded-full bg-primary-600 hover:bg-primary-700 text-white px-4 py-1.5 text-sm font-medium transition duration-200"
+                          >
+                            {activePaymentId === item.id ? 'Close' : 'Pay Now'}
+                          </button>
+                        )}
                       </div>
                       <div className="text-sm text-gray-500 space-y-1">
                         <p><span className="text-gray-400">Total Tickets:</span> {item.tickets?.length || 0}</p>
@@ -137,6 +185,14 @@ export const MyTicketsPage = () => {
                       </div>
                     </div>
                   </div>
+
+                  {!isPaid && activePaymentId === item.id && (
+                    <BookingPaymentPanel
+                      booking={item}
+                      submitting={submittingPayment}
+                      onSubmit={(paymentData) => handlePaymentSubmit(item.id, paymentData)}
+                    />
+                  )}
                 </div>
               );
             })}

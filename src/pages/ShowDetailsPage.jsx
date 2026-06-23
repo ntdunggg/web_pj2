@@ -83,6 +83,8 @@ export const ShowDetailsPage = () => {
           promotion: booking.promotionDiscount,
         },
         promotionCode: booking.promotionCode || null,
+        contactPhone: paymentData.phone || null,
+        deliveryAddress: paymentData.address || null,
       };
 
       console.log('Booking data:', bookingData);
@@ -236,6 +238,7 @@ export const ShowDetailsPage = () => {
                 onPaymentMethodChange={booking.setPaymentMethod}
                 onSubmit={handlePayment}
                 disabled={submitting}
+                amount={booking.totalAmount}
               />
               <Button
                 variant="ghost"

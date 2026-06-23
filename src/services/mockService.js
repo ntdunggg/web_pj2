@@ -1,5 +1,5 @@
 import { generateTicketId } from '../utils/ticketUtils';
-import { SEAT_STATUS, BOOKING_STATUS, ZONES } from '../utils/constants';
+import { SEAT_STATUS, BOOKING_STATUS, ZONES, PAYMENT_METHODS } from '../utils/constants';
 
 // Mock data storage
 let mockData = {
@@ -436,6 +436,25 @@ export const mockService = {
     });
 
     return occupancy;
+  },
+
+  submitPayment: async ({ bookingId, userId, method, phone, address }) => {
+    await delay();
+    const booking = mockData.bookings.find((b) => b.id === bookingId);
+    if (!booking) throw new Error('Booking not found');
+
+    if (method === 'online') {
+      booking.status = BOOKING_STATUS.SUCCESS;
+      booking.paymentMethod = PAYMENT_METHODS.VNPAY;
+    } else {
+      booking.status = BOOKING_STATUS.PENDING;
+      booking.paymentMethod = PAYMENT_METHODS.CASH;
+      booking.contactPhone = phone;
+      booking.deliveryAddress = address;
+    }
+
+    saveMockData();
+    return booking;
   },
 };
 
