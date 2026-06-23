@@ -16,7 +16,7 @@ export const ShowDetailsPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const { user } = useAuth();
-  
+
   const [show, setShow] = useState(null);
   const [seatData, setSeatData] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -56,9 +56,9 @@ export const ShowDetailsPage = () => {
 
     try {
       setSubmitting(true);
-      
+
       console.log('Creating booking for user:', user);
-      
+
       const bookingData = {
         userId: user.id,
         showId: show.id,
@@ -76,7 +76,7 @@ export const ShowDetailsPage = () => {
       console.log('Booking data:', bookingData);
       const result = await serviceProvider.createBooking(bookingData);
       console.log('Booking result:', result);
-      
+
       // Navigate to success page with booking details
       navigate('/booking-success', { state: { booking: result } });
     } catch (err) {
@@ -110,7 +110,7 @@ export const ShowDetailsPage = () => {
   return (
     <Layout>
       {submitting && <LoadingOverlay message="Processing your booking..." />}
-      
+
       <div className="space-y-6">
         {/* Back Button */}
         <Button variant="ghost" onClick={() => navigate('/')}>
@@ -119,7 +119,7 @@ export const ShowDetailsPage = () => {
         </Button>
 
         {/* Show Header */}
-        <div className="bg-white border border-gray-200 shadow-md rounded-lg p-6">
+        <div className="flex w-full flex-col justify-between rounded-3xl border border-primary/20 bg-primary/15 p-6 backdrop-blur-sm transition duration-300 hover:-translate-y-1 hover:bg-primary/12">
           <div className="flex flex-col md:flex-row gap-6">
             <img
               src={show.image}
@@ -131,7 +131,7 @@ export const ShowDetailsPage = () => {
                 {show.name}
               </h1>
               <p className="text-gray-600 mb-4">{show.description}</p>
-              
+
               {booking.isWednesday && (
                 <Alert variant="success" className="mb-4">
                   <p className="font-semibold">🎉 Wednesday Special!</p>
@@ -153,7 +153,7 @@ export const ShowDetailsPage = () => {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             {/* Seating Chart */}
             <div className="lg:col-span-2">
-              <div className="bg-white border border-gray-200 shadow-md rounded-lg p-6">
+              <div className="flex w-full flex-col justify-between rounded-3xl border border-primary/20 bg-primary/15 p-6 backdrop-blur-sm transition duration-300 hover:-translate-y-1 hover:bg-primary/12">
                 <h2 className="text-2xl font-bold text-gray-900 mb-6">
                   Select Your Seats
                 </h2>

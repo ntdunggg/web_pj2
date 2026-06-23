@@ -5,10 +5,10 @@ import { Badge } from './ui/Badge';
 import { formatDateTime } from '../utils/dateUtils';
 import { cn } from '../utils/cn';
 
-export const BookingSummary = ({ 
-  show, 
-  selectedSeats, 
-  basePrice, 
+export const BookingSummary = ({
+  show,
+  selectedSeats,
+  basePrice,
   isWednesday,
   wednesdayDiscountAmount,
   priceAfterWednesday,
@@ -19,9 +19,9 @@ export const BookingSummary = ({
   const isCustomStyle = !!className;
 
   return (
-    <div className={cn("sticky top-4", className || "bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-200 border border-gray-200")}>
-      <div 
-        className={isCustomStyle ? "flex justify-between items-center cursor-pointer lg:cursor-default pb-4 border-b border-primary/20" : "px-6 py-4 border-b border-gray-200 flex justify-between items-center cursor-pointer lg:cursor-default"} 
+    <div className={cn("sticky top-4", className || "flex w-full flex-col justify-between rounded-3xl border border-primary/20 bg-primary/15 p-6 backdrop-blur-sm transition duration-300 hover:-translate-y-1 hover:bg-primary/12")}>
+      <div
+        className={isCustomStyle ? "flex justify-between items-center cursor-pointer lg:cursor-default pb-4 border-b border-primary/20" : "px-6 py-4 border-b border-gray-200 flex justify-between items-center cursor-pointer lg:cursor-default"}
         onClick={() => setIsOpen(!isOpen)}
       >
         <div className="flex flex-col text-left">
@@ -36,7 +36,7 @@ export const BookingSummary = ({
           {isOpen ? 'Hide' : 'Show'}
         </span>
       </div>
-      
+
       <div className={cn("lg:block", isOpen ? "block" : "hidden")}>
         <div className={isCustomStyle ? "space-y-4 pt-4" : "px-6 py-4 space-y-4"}>
           {/* Show Details */}
