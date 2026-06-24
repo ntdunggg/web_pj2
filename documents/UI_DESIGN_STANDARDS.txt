@@ -69,14 +69,15 @@ Info - Xanh dương (thông tin):
 1.4. MÀU TƯƠNG TÁC (INTERACTIVE COLORS)
 ----------------------------------------
 Zone Colors - Màu phân loại ghế:
-  • Zone A (VIP): #8b5cf6 (Tím)
-  • Zone B (Standard): #3b82f6 (Xanh dương)
-  • 2nd Floor (Economy): #10b981 (Xanh lá)
+  • Zone A (VIP): #f97316 (Cam)
+  • Zone B (Standard): #d97706 (Đỏ vàng/Amber)
+  • 2nd Floor (Economy): #22c55e (Xanh lá)
 
 Seat Status Colors:
-  • Available: #ffffff (Trắng + border gray)
-  • Selected: #3b82f6 (Primary blue)
+  • Available: #ffffff (Trắng + viền màu theo Zone)
+  • Selected: #f84565 (Primary red)
   • Sold: #9ca3af (Gray-400)
+  • Pending: #eab308 (Yellow-500 nhấp nháy)
 
 ================================================================================
 2. TYPOGRAPHY - HỆ THỐNG FONT CHỮ
@@ -397,17 +398,17 @@ Sold:
 ----------------
 Zone A (15x10):
   • 15 rows × 10 columns = 150 seats
-  • Color indicator: bg-purple-600
+  • Color indicator: text-orange-500
 
 Zone B (15x10):
   • 15 rows × 10 columns = 150 seats
-  • Color indicator: bg-blue-600
+  • Color indicator: text-amber-500
 
-2nd Floor (10x20):
-  • 10 rows × 20 columns = 200 seats
-  • Color indicator: bg-green-600
+2nd Floor (5x20):
+  • 5 rows × 20 columns = 100 seats
+  • Color indicator: text-green-500
 
-Total Capacity: 500 seats
+Total Capacity: 400 seats
 
 8.4. LEGEND
 -----------

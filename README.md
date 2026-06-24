@@ -1,34 +1,17 @@
-# Performance Ticket Booking System - Frontend# React + Vite
+# Performance Ticket Booking System - Frontend
 
+A modern, high-quality frontend application for a performance ticket booking system built with React.js, Vite, and Tailwind CSS.
 
+## 🎯 Features
 
-A modern, high-quality frontend application for a performance ticket booking system built with React.js, Vite, and Tailwind CSS.This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
-
-
-
-## 🎯 FeaturesCurrently, two official plugins are available:
-
-
-
-### Customer Features- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-
-- **Browse Shows**: View all available performances with details and pricing- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-- **Interactive Seating Map**: 500-seat venue with 3 zones (Zone A, Zone B, Level 2)
-
-- **Multi-Seat Selection**: Select multiple seats in a single booking## React Compiler
-
+### Customer Features
+- **Browse Shows**: View all available performances with details and pricing
+- **Interactive Seating Map**: 400-seat venue with 3 zones (Zone A, Zone B, Level 2)
+- **Multi-Seat Selection**: Select multiple seats in a single booking
 - **Wednesday Discount**: Automatic 30% discount on Wednesday shows
-
-- **Promotion Codes**: Apply discount vouchers at checkoutThe React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
+- **Promotion Codes**: Apply discount vouchers at checkout
 - **Payment Options**: Credit card or cash payment
-
-- **My Tickets**: View booked tickets with QR codes for venue entry## Expanding the ESLint configuration
-
-
-
-### Staff FeaturesIf you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- **My Tickets**: View booked tickets with QR codes for venue entry
 
 - **Booking Management**: View all bookings with filtering
 - **Status Updates**: Approve or reject bookings
@@ -103,11 +86,11 @@ npm run dev
 
 ## 🎨 Design Features
 
-### Seating Chart (500 Seats)
+### Seating Chart (400 Seats)
 - **Level 1**: 
   - Zone A: 15 rows × 10 columns = 150 seats
   - Zone B: 15 rows × 10 columns = 150 seats
-- **Level 2**: 20 rows × 10 columns = 200 seats
+- **Level 2**: 5 rows × 20 columns = 100 seats
 - Interactive seat selection with real-time status updates
 
 ### Wednesday Discount Logic
@@ -116,8 +99,9 @@ npm run dev
 - Visual badge on Wednesday shows
 
 ### Color Theme
-- **Primary**: `#2563eb` (Modern Blue)
-- **Seat Colors**: White (Available), Blue (Selected), Red (Sold), Yellow (Pending)
+- **Primary**: `#f84565` (Rose Red)
+- **Seat Colors**: White (Available), Rose Red (Selected), Gray (Sold), Yellow (Pending)
+  - **Zones**: Zone A (Orange), Zone B (Amber), Level 2 (Green)
 
 ## 📁 Project Structure
 

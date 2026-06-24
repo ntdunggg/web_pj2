@@ -236,7 +236,7 @@ ticket-booking-frontend/
 │   │   ├── Layout.jsx               # Layout wrapper với navbar/footer
 │   │   ├── Navbar.jsx               # Navigation bar
 │   │   ├── ShowCard.jsx             # Card hiển thị show
-│   │   ├── SeatingChart.jsx         # Sơ đồ chọn ghế (500 seats)
+│   │   ├── SeatingChart.jsx         # Sơ đồ chọn ghế (400 seats)
 │   │   ├── BookingSummary.jsx       # Tóm tắt booking
 │   │   ├── PaymentForm.jsx          # Form thanh toán
 │   │   └── TicketCard.jsx           # Card hiển thị vé với QR
@@ -296,9 +296,7 @@ ticket-booking-frontend/
 ├── tailwind.config.js               # Tailwind CSS configuration
 ├── vite.config.js                   # Vite build configuration
 ├── test_frontend.sh                 # Script test frontend
-├── README.md                        # Hướng dẫn dự án
-├── QUICK_START.md                   # Quick start guide
-└── TECHNICAL_DOCS.md                # Tài liệu kỹ thuật
+└── README.md                        # Hướng dẫn dự án
 
 ================================================================================
 
@@ -359,7 +357,7 @@ Chứa tất cả React components được tái sử dụng trong dự án.
                   Image, title, date, location, price, "Book Now" button
   
   - SeatingChart.jsx: Component phức tạp nhất
-                      Hiển thị 500 ghế (Zone A, Zone B, 2nd Floor)
+                      Hiển thị 400 ghế (Zone A, Zone B, 2nd Floor)
                       Interactive seat selection
                       Color-coded by zone và status
   
@@ -572,17 +570,6 @@ J. DOCUMENTATION FILES
   Installation instructions
   How to run
   Features list
-  
-• QUICK_START.md
-  Quick start guide
-  Test credentials
-  Common tasks
-  
-• TECHNICAL_DOCS.md
-  Technical documentation
-  Architecture overview
-  API documentation
-  Component documentation
   
 • documents/UI_DESIGN_STANDARDS.txt
   UI/UX design standards

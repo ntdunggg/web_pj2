@@ -108,7 +108,7 @@ export const PaymentForm = ({ paymentMethod, onPaymentMethodChange, onSubmit, di
                   className="h-28 w-28 object-contain rounded"
                 />
               </div>
-              <div className="text-left">
+              <div className="text-left flex-1">
                 <p className="text-sm font-bold text-blue-900">Pay Instantly using VNPay / VietQR</p>
                 <p className="text-xs text-blue-700 mt-1">
                   Scan the VietQR code to make a fast transfer. Please confirm your booking after transferring. You can also view details and pay later in "My Tickets".
@@ -116,6 +116,16 @@ export const PaymentForm = ({ paymentMethod, onPaymentMethodChange, onSubmit, di
                 <div className="mt-2 text-xs text-blue-800 font-mono">
                   <p>Bank: <span className="font-bold">Vietcombank</span></p>
                   <p>A/C: <span className="font-bold">1025776720</span></p>
+                </div>
+                <div className="mt-3 p-2 bg-blue-100 border border-blue-200 rounded text-xs text-blue-900">
+                  <p className="font-bold mb-1">⚠️ LƯU Ý QUAN TRỌNG:</p>
+                  <ul className="list-disc pl-4 space-y-1">
+                    <li>
+                      Vui lòng ghi nội dung chuyển khoản theo cú pháp:<br/>
+                      <span className="font-bold text-red-600 inline-block mt-1">[Tên Show] + [Vị trí vé] + [SĐT của bạn]</span>
+                    </li>
+                    <li>Hệ thống sẽ giữ vé của bạn trong vòng <span className="font-bold text-red-600">24 giờ</span> kể từ lúc đặt vé. Vui lòng hoàn tất thanh toán trong thời gian này để tránh bị huỷ vé.</li>
+                  </ul>
                 </div>
               </div>
             </div>
