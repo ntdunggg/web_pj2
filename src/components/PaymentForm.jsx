@@ -69,9 +69,7 @@ export const PaymentForm = ({ paymentMethod, onPaymentMethodChange, onSubmit, di
 
           {paymentMethod === PAYMENT_METHODS.CASH && (
             <div className="space-y-4">
-              <div className="p-4 bg-yellow-50 border border-yellow-200 rounded-lg text-sm text-yellow-800">
-                <strong>Note:</strong> Please pay at the venue before the show. Your booking will be held for 24 hours.
-              </div>
+
 
               <div className="grid gap-4 md:grid-cols-2">
                 <div className="flex flex-col">

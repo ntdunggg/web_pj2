@@ -81,14 +81,21 @@ const initializeMockData = () => {
     mockData.seats[show.id] = {
       zone_a: generateSeats(15, 10),
       zone_b: generateSeats(15, 10),
-      level_2: generateSeats(10, 20), // 10 rows x 20 columns
+      level_2: generateSeats(5, 20), // 5 rows x 20 columns
     };
   });
 
   // Load from localStorage if available
   const stored = localStorage.getItem('mockData');
   if (stored) {
-    mockData = { ...mockData, ...JSON.parse(stored) };
+    const parsed = JSON.parse(stored);
+    const firstShowId = Object.keys(parsed.seats || {})[0];
+    if (firstShowId && parsed.seats[firstShowId].level_2 && parsed.seats[firstShowId].level_2.length !== 100) {
+      console.log("Detected old seat config, clearing mock data...");
+      localStorage.removeItem('mockData');
+    } else {
+      mockData = { ...mockData, ...parsed };
+    }
   }
 };
 
@@ -202,7 +209,7 @@ export const mockService = {
     mockData.seats[newShow.id] = {
       zone_a: generateSeats(15, 10),
       zone_b: generateSeats(15, 10),
-      level_2: generateSeats(10, 20), // 10 rows x 20 columns
+      level_2: generateSeats(5, 20), // 5 rows x 20 columns
     };
     
     saveMockData();
@@ -265,8 +272,10 @@ export const mockService = {
       );
       if (seatIndex !== -1) {
         // For card payment (SUCCESS): mark as SOLD
-        // For cash payment (PENDING): mark as SOLD but can be released if rejected
-        zoneSeats[seatIndex].status = SEAT_STATUS.SOLD;
+        // For cash payment (PENDING): mark as PENDING
+        zoneSeats[seatIndex].status = bookingStatus === BOOKING_STATUS.SUCCESS 
+          ? SEAT_STATUS.SOLD 
+          : SEAT_STATUS.PENDING;
         zoneSeats[seatIndex].bookingId = newBooking.id; // Track booking for this seat
       }
     });
@@ -311,9 +320,17 @@ export const mockService = {
       });
     }
     
-    // If approved (pending -> success), keep seats as sold
+    // If approved (pending -> success), update seats to sold
     if (status === BOOKING_STATUS.SUCCESS && oldStatus === BOOKING_STATUS.PENDING) {
-      // Seats already marked as SOLD, just confirm the booking
+      booking.seats.forEach((seat) => {
+        const zoneSeats = mockData.seats[booking.showId][seat.zone];
+        const seatIndex = zoneSeats.findIndex(
+          (s) => s.row === seat.row && s.col === seat.col
+        );
+        if (seatIndex !== -1) {
+          zoneSeats[seatIndex].status = SEAT_STATUS.SOLD;
+        }
+      });
       console.log(`Booking ${id} approved: seats confirmed as sold`);
     }
     
@@ -356,7 +373,7 @@ export const mockService = {
     await delay();
     const occupancy = mockData.shows.map((show) => {
       const seats = mockData.seats[show.id];
-      const totalSeats = 500;
+      const totalSeats = 400;
       const soldSeats = Object.values(seats)
         .flat()
         .filter((s) => s.status === SEAT_STATUS.SOLD).length;
@@ -381,11 +398,31 @@ export const mockService = {
     if (method === 'online') {
       booking.status = BOOKING_STATUS.SUCCESS;
       booking.paymentMethod = PAYMENT_METHODS.VNPAY;
+      // Update seats to SOLD
+      booking.seats.forEach((seat) => {
+        const zoneSeats = mockData.seats[booking.showId][seat.zone];
+        const seatIndex = zoneSeats.findIndex(
+          (s) => s.row === seat.row && s.col === seat.col
+        );
+        if (seatIndex !== -1) {
+          zoneSeats[seatIndex].status = SEAT_STATUS.SOLD;
+        }
+      });
     } else {
       booking.status = BOOKING_STATUS.PENDING;
       booking.paymentMethod = PAYMENT_METHODS.CASH;
       booking.contactPhone = phone;
       booking.deliveryAddress = address;
+      // Update seats to PENDING
+      booking.seats.forEach((seat) => {
+        const zoneSeats = mockData.seats[booking.showId][seat.zone];
+        const seatIndex = zoneSeats.findIndex(
+          (s) => s.row === seat.row && s.col === seat.col
+        );
+        if (seatIndex !== -1) {
+          zoneSeats[seatIndex].status = SEAT_STATUS.PENDING;
+        }
+      });
     }
 
     saveMockData();

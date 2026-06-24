@@ -18,6 +18,9 @@ const SeatButton = ({ seat, zone, onSelect, isSelected, disabled }) => {
     if (isSelected) return 'bg-primary-600 text-white border-primary-600 cursor-pointer';
     switch (status) {
       case SEAT_STATUS.AVAILABLE:
+        if (zone === ZONES.ZONE_A) return 'bg-orange-100 border-2 border-orange-400 hover:bg-orange-200 text-orange-900 cursor-pointer';
+        if (zone === ZONES.ZONE_B) return 'bg-amber-100 border-2 border-amber-400 hover:bg-amber-200 text-amber-900 cursor-pointer';
+        if (zone === ZONES.LEVEL_2) return 'bg-green-100 border-2 border-green-400 hover:bg-green-200 text-green-900 cursor-pointer';
         return 'bg-white border-2 border-gray-300 hover:border-primary-500 hover:bg-primary-50 text-gray-800 cursor-pointer';
       case SEAT_STATUS.SOLD:
         return 'bg-gray-300 text-gray-500 border-2 border-gray-300 cursor-not-allowed opacity-60';
@@ -86,7 +89,6 @@ const ZoneALayout = ({ zone, seats, onSeatSelect, selectedSeats, disabled }) => 
   return (
     <div className="space-y-3">
       <div className="flex items-center gap-2">
-        <div className="w-3 h-3 rounded-full bg-purple-600" />
         <h3 className="text-lg font-semibold text-gray-900">Zone A</h3>
       </div>
       <div className="bg-white p-4 rounded-lg border border-gray-200 shadow-sm">
@@ -122,7 +124,6 @@ const ZoneBLayout = ({ zone, seats, onSeatSelect, selectedSeats, disabled }) => 
   return (
     <div className="space-y-3">
       <div className="flex items-center gap-2">
-        <div className="w-3 h-3 rounded-full bg-blue-600" />
         <h3 className="text-lg font-semibold text-gray-900">Zone B</h3>
       </div>
       <div className="bg-white p-4 rounded-lg border border-gray-200 shadow-sm overflow-auto">
@@ -195,7 +196,6 @@ const ZoneSeating = ({ zoneName, zone, seats, onSeatSelect, selectedSeats, disab
   return (
     <div className="space-y-3">
       <div className="flex items-center gap-2">
-        <div className="w-3 h-3 rounded-full bg-green-600" />
         <h3 className="text-lg font-semibold text-gray-900">{zoneName}</h3>
       </div>
       <div className="bg-white p-4 rounded-lg border border-gray-200 shadow-sm overflow-auto">

@@ -7,12 +7,14 @@ import { useAuth } from '../contexts/AuthContext';
 import { serviceProvider } from '../services';
 import { formatDateTime } from '../utils/dateUtils';
 import { BookingPaymentPanel } from '../components/BookingPaymentPanel';
+import { TicketCard } from '../components/TicketCard';
 
 export const MyTicketsPage = () => {
   const [bookings, setBookings] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [activePaymentId, setActivePaymentId] = useState(null);
+  const [activeTicketsId, setActiveTicketsId] = useState(null);
   const [submittingPayment, setSubmittingPayment] = useState(false);
   const { user } = useAuth();
   const location = useLocation();
@@ -169,6 +171,14 @@ export const MyTicketsPage = () => {
                         <p className="mb-3 text-2xl font-bold text-primary-600">
                           ${item.totalAmount?.toFixed(2)}
                         </p>
+                        {isPaid && (
+                          <button
+                            onClick={() => setActiveTicketsId((prev) => (prev === item.id ? null : item.id))}
+                            className="mb-3 cursor-pointer rounded-full bg-primary-600 hover:bg-primary-700 text-white px-4 py-1.5 text-sm font-medium transition duration-200"
+                          >
+                            {activeTicketsId === item.id ? 'Hide Tickets' : 'View Tickets'}
+                          </button>
+                        )}
                         {!isPaid && (
                           <button
                             onClick={() => setActivePaymentId((prev) => (prev === item.id ? null : item.id))}
@@ -192,6 +202,18 @@ export const MyTicketsPage = () => {
                       submitting={submittingPayment}
                       onSubmit={(paymentData) => handlePaymentSubmit(item.id, paymentData)}
                     />
+                  )}
+
+                  {isPaid && activeTicketsId === item.id && (
+                    <div className="mt-6 pt-6 border-t border-primary/20 grid grid-cols-1 md:grid-cols-2 gap-6">
+                      {item.tickets?.map((ticket) => (
+                        <TicketCard
+                          key={ticket.id}
+                          ticket={{ ...ticket, status: item.status }}
+                          showDetails={item.show}
+                        />
+                      ))}
+                    </div>
                   )}
                 </div>
               );

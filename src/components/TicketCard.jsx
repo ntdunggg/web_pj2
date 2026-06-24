@@ -2,6 +2,7 @@ import { QRCodeSVG } from 'qrcode.react';
 import { Calendar, MapPin, Ticket as TicketIcon } from 'lucide-react';
 import { Card, CardContent } from './ui/Card';
 import { Badge } from './ui/Badge';
+import { Button } from './ui/Button';
 import { formatDateTime } from '../utils/dateUtils';
 import { BOOKING_STATUS } from '../utils/constants';
 

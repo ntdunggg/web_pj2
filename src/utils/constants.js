@@ -45,9 +45,9 @@ export const ZONE_CONFIG = {
   },
   [ZONES.LEVEL_2]: {
     name: '2nd Floor',
-    rows: 10,
+    rows: 5,
     cols: 20,
-    totalSeats: 200,
+    totalSeats: 100,
   },
 };
 
