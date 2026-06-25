@@ -14,7 +14,6 @@ export const USER_ROLES = {
 
 export const PAYMENT_METHODS = {
   CASH: 'cash',
-  CARD: 'card',
   VNPAY: 'vnpay',
 };
 

@@ -221,7 +221,7 @@ export const StaffDashboardPage = () => {
                           ${booking.totalAmount?.toFixed(2) || '0.00'}
                         </td>
                         <td className="p-3">
-                          <Badge variant={booking.paymentMethod === 'card' ? 'primary' : 'default'}>
+                          <Badge variant="default">
                             {booking.paymentMethod}
                           </Badge>
                         </td>

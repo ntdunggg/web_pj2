@@ -80,15 +80,6 @@ export const BookingSuccessPage = () => {
           </Alert>
         )}
 
-        {booking.paymentMethod === 'card' && booking.status === 'success' && (
-          <Alert variant="success" className="mb-6">
-            <p className="font-semibold">Payment Confirmed</p>
-            <p className="text-sm mt-1">
-              Your credit card payment has been processed successfully. Your QR code tickets are ready in "My Tickets" section.
-            </p>
-          </Alert>
-        )}
-
         <div className="flex gap-4">
           <Button
             className="flex-1"

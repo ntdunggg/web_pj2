@@ -69,8 +69,6 @@ export const PaymentForm = ({ paymentMethod, onPaymentMethodChange, onSubmit, di
 
           {paymentMethod === PAYMENT_METHODS.CASH && (
             <div className="space-y-4">
-
-
               <div className="grid gap-4 md:grid-cols-2">
                 <div className="flex flex-col">
                   <span className="mb-1 text-sm font-medium text-gray-700">Phone Number</span>

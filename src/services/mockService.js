@@ -247,19 +247,19 @@ export const mockService = {
       ...seat,
     }));
 
-    // Determine status based on payment method
-    // Card payment: SUCCESS (auto-approved)
-    // Cash payment: PENDING (needs staff confirmation)
-    const bookingStatus = bookingData.paymentMethod === 'card' 
-      ? BOOKING_STATUS.SUCCESS 
-      : BOOKING_STATUS.PENDING;
+    // All new bookings are PENDING (requires staff confirmation for VNPay/Cash)
+    const bookingStatus = BOOKING_STATUS.PENDING;
+
+    const createdAt = new Date().toISOString();
+    const expiresAt = new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString();
 
     const newBooking = {
       id: String(mockData.bookings.length + 1),
       ...bookingData,
       tickets,
       status: bookingStatus,
-      createdAt: new Date().toISOString(),
+      createdAt,
+      expiresAt,
     };
 
     mockData.bookings.push(newBooking);
@@ -271,11 +271,8 @@ export const mockService = {
         (s) => s.row === seat.row && s.col === seat.col
       );
       if (seatIndex !== -1) {
-        // For card payment (SUCCESS): mark as SOLD
-        // For cash payment (PENDING): mark as PENDING
-        zoneSeats[seatIndex].status = bookingStatus === BOOKING_STATUS.SUCCESS 
-          ? SEAT_STATUS.SOLD 
-          : SEAT_STATUS.PENDING;
+        // New bookings are PENDING, so seat is PENDING
+        zoneSeats[seatIndex].status = SEAT_STATUS.PENDING;
         zoneSeats[seatIndex].bookingId = newBooking.id; // Track booking for this seat
       }
     });
